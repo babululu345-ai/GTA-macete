@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA MACETE PREMIUM</title>
+    <style>
+        :root { --neon: #00d4ff; --pink: #ff00ff; --bg: #0d1117; --card-bg: #161b22; --btn-dark: #1c2235; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--bg); color: #fff; padding: 15px; }
+
+        /* TELA DE CARREGAMENTO */
+        #splash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #0d1117 100%);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.5s ease;
+        }
+        .splash-text {
+            text-align: center;
+            animation: pulse 1.5s infinite;
+        }
+        .splash-text h1 {
+            font-size: 28px;
+            background: linear-gradient(90deg, #33ccff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        .loader {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: var(--neon);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto 0;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* RESTO DO DESIGN */
+        .banner { 
+            background: linear-gradient(135deg, #33ccff 0%, #ff00ff 100%); 
+            padding: 50px 20px; border-radius: 40px; text-align: center; margin-bottom: 30px; 
+        }
+        .banner h1 { margin: 0; font-size: 36px; font-weight: 900; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase; }
+        .v-tag { font-size: 11px; margin-top: 15px; font-weight: bold; background: rgba(0,0,0,0.2); display: inline-block; padding: 6px 15px; border-radius: 20px; }
+
+        .label { font-size: 14px; color: var(--neon); font-weight: bold; margin: 25px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .btn { 
+            background: var(--btn-dark); border: none; color: #8b949e; padding: 18px 5px; 
+            border-radius: 15px; font-weight: bold; font-size: 13px; cursor: pointer; text-transform: uppercase;
+        }
+        .btn.active { background: linear-gradient(90deg, #00dbff, #ff00ff); color: #fff; }
+
+        .search { 
+            width: 100%; padding: 20px; background: var(--card-bg); border: 1px solid #222; 
+            border-radius: 15px; color: #fff; margin-bottom: 30px; box-sizing: border-box; outline: none; font-size: 16px; 
+        }
+
+        .card { background: var(--card-bg); padding: 25px; border-radius: 25px; margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid #222; }
+        .card::before { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 5px; background: var(--neon); border-radius: 0 5px 5px 0; }
+        .c-name { font-weight: bold; margin-bottom: 15px; font-size: 20px; display: block; }
+        .c-code-box { background: #0d1117; padding: 20px; border-radius: 15px; }
+        .c-code { color: var(--neon); font-family: monospace; font-size: 14px; display: block; line-height: 1.6; word-spacing: 5px; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <div class="splash-text">
+            <h1>GTA MACETE PREMIUM</h1>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <div class="banner">
+        <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
+        <div class="v-tag">ATUALIZADO EM: 03/05/2026</div>
+    </div>
+
+    <div class="label">ESCOLHA O JOGO</div>
+    <div class="grid">
+        <button class="btn active" id="g-v" onclick="setGame('v')">GTA V</button>
+        <button class="btn" id="g-iv" onclick="setGame('iv')">GTA IV</button>
+        <button class="btn" id="g-sa" onclick="setGame('sa')">GTA SA</button>
+    </div>
+
+    <div class="label">PLATAFORMA</div>
+    <div id="modes" class="grid"></div>
+
+    <input type="text" class="search" placeholder="Pesquisar macete..." onkeyup="search(this.value)">
+
+    <div id="list"></div>
+
+<script>
+    // SCRIPT PARA SUMIR O LOAD
+    setTimeout(() => {
+        document.getElementById('splash').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('splash').style.display = 'none';
+        }, 500);
+    }, 3000);
+
+    const db = {
+        v: {
+            m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
+            'PS4 / PS5': [
+                {n:"Vida e Armadura", c:"O, L1, TRI, R2, X, QUAD, O, DIR, QUAD, L1, L1, L1"},
+                {n:"Invencibilidade", c:"DIR, X, DIR, ESQ, DIR, R1, DIR, ESQ, X, TRI"},
+                {n:"Todas as Armas", c:"TRI, R2, ESQ, L1, X, DIR, TRI, BAIXO, QUAD, L1, L1, L1"},
+                {n:"Diminuir Procurado", c:"R1, R1, O, R2, DIR, ESQ, DIR, ESQ, DIR, ESQ"},
+                {n:"Aumentar Procurado", c:"R1, R1, O, R2, ESQ, DIR, ESQ, DIR, ESQ, DIR"},
+                {n:"Super Pulo", c:"ESQ, ESQ, TRI, TRI, DIR, DIR, ESQ, DIR, QUAD, R1, R2"},
+                {n:"Skyfall", c:"L1, L2, R1, R2, ESQ, DIR, ESQ, DIR, L1, L2, R1, R2, ESQ, DIR, ESQ, DIR"},
+                {n:"Munição Explosiva", c:"DIR, QUAD, X, ESQ, R1, R2, ESQ, DIR, DIR, L1, L1, L1"},
+                {n:"Helicóptero Buzzard", c:"O, O, L1, O, O, O, L1, L2, R1, TRI, O, TRI"},
+                {n:"Carro Comet", c:"R1, O, R2, DIR, L1, L2, X, X, QUAD, R1"}
+            ],
+            'CELULAR': [
+                {n:"Vida e Armadura", c:"1-999-887-853"},
+                {n:"Invencibilidade", c:"1-999-724-654-5537"},
+                {n:"Diminuir Procurado", c:"1-999-529-93787"},
+                {n:"Super Pulo", c:"1-999-467-8648"},
+                {n:"Helicóptero", c:"1-999-289-9633"}
+            ],
+            'PC': [
+                {n:"Vida e Armadura", c:"TURTLE"},
+                {n:"Invencibilidade", c:"PAINKILLER"},
+                {n:"Armas", c:"TOOLUP"},
+                {n:"Super Pulo", c:"HOPTOIT"}
+            ]
+        },
+        sa: {
+            m: ['PS2', 'PC', 'XBOX 360'],
+            'PS2': [
+                {n:"Vida, Colete e $250k", c:"R1, R2, L1, X, ESQ, BAIXO, DIR, CIMA, ESQ, BAIXO, DIR, CIMA"},
+                {n:"Mochila a Jato", c:"L1, L2, R1, R2, CIMA, BAIXO, ESQ, DIR, L1, L2, R1, R2, CIMA, BAIXO, ESQ, DIR"},
+                {n:"Tanque Rhino", c:"O, O, L1, O, O, O, L1, L2, R1, TRI, O, TRI"},
+                {n:"Carros Voadores", c:"QUAD, BAIXO, L2, CIMA, L1, O, CIMA, X, ESQ"},
+                {n:"Nunca Procurado", c:"O, DIR, O, DIR, ESQ, QUAD, TRI, CIMA"},
+                {n:"Super Soco", c:"CIMA, ESQ, X, TRI, R1, O, O, O, L2"}
+            ],
+            'PC': [
+                {n:"Vida, Colete e Dinheiro", c:"HESOYAM"},
+                {n:"Jetpack", c:"ROCKETMAN"},
+                {n:"Tanque", c:"AIWPRTON"},
+                {n:"Carros Voadores", c:"CHITTYCHITTYBANGBANG"},
+                {n:"Nunca Procurado", c:"AEZAKMI"}
+            ]
+        }
+    }
+
+    let currentGame = 'v';
+    let currentMode = 'PS4 / PS5';
+
+    function setGame(g) {
+        currentGame = g;
+        document.querySelectorAll('.grid')[0].querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('g-'+g).classList.add('active');
+        renderModes();
+        renderList();
+    }
+
+    function setMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.grid')[1].querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        renderList();
+    }
+
+    function renderModes() {
+        let html = '';
+        db[currentGame].m.forEach(mode => {
+            html += `<button class="btn" onclick="setMode('${mode}')">${mode}</button>`;
+        });
+        document.getElementById('modes').innerHTML = html;
+        document.querySelectorAll('.grid')[1].querySelectorAll('.btn')[0].classList.add('active');
+        currentMode = db[currentGame].m[0];
+    }
+
+    function renderList() {
+        let html = '';
+        db[currentGame][currentMode].forEach(item => {
+            html += `
+            <div class="card">
+                <span class="c-name">${item.n}</span>
+                <div class="c-code-box">
+                    <span class="c-code">${item.c}</span>
+                </div>
+            </div>
+            `;
+        });
+        document.getElementById('list').innerHTML = html;
+    }
+
+    // ✅ CORRIGIDO: Função de busca sem loop infinito
+    function search(texto) {
+        let termo = texto.toLowerCase();
+        let html = '';
+        
+        // Pega a lista correta do jogo e plataforma
+        const lista = db[currentGame][currentMode];
+        
+        lista.forEach(item => {
+            if(item.n.toLowerCase().includes(termo) || item.c.toLowerCase().includes(termo)) {
+                html += `
+                <div class="card">
+                    <span class="c-name">${item.n}</span>
+                    <div class="c-code-box">
+                        <span class="c-code">${item.c}</span>
+                    </div>
+                </div>
+                `;
+            }
+        });
+
+        document.getElementById('list').innerHTML = html;
+    }
+
+    // INICIO
+    renderModes();
+    renderList();
+
+</script>
+
+</body>
+</html>

@@ -52,7 +52,23 @@
             padding: 50px 20px; border-radius: 40px; text-align: center; margin-bottom: 30px; 
         }
         .banner h1 { margin: 0; font-size: 36px; font-weight: 900; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase; }
-        .v-tag { font-size: 11px; margin-top: 15px; font-weight: bold; background: rgba(0,0,0,0.2); display: inline-block; padding: 6px 15px; border-radius: 20px; }
+        
+        /* ✅ AQUI ESTÁ A DATA DE LANÇAMENTO E ATUALIZAÇÕES */
+        .dates {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .date-box {
+            font-size: 11px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.2);
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+        }
 
         .label { font-size: 14px; color: var(--neon); font-weight: bold; margin: 25px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
         
@@ -86,7 +102,12 @@
 
     <div class="banner">
         <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
-        <div class="v-tag">ATUALIZADO EM: 03/05/2026</div>
+        
+        <!-- ✅ DATAS ADICIONADAS AQUI -->
+        <div class="dates">
+            <div class="date-box">📅 LANÇAMENTO: 03/05/2026</div>
+            <div class="date-box">🔄 ÚLTIMA ATUALIZAÇÃO: 03/05/2026</div>
+        </div>
     </div>
 
     <div class="label">ESCOLHA O JOGO</div>
@@ -204,12 +225,9 @@
         document.getElementById('list').innerHTML = html;
     }
 
-    // ✅ CORRIGIDO: Função de busca sem loop infinito
     function search(texto) {
         let termo = texto.toLowerCase();
         let html = '';
-        
-        // Pega a lista correta do jogo e plataforma
         const lista = db[currentGame][currentMode];
         
         lista.forEach(item => {
@@ -224,7 +242,6 @@
                 `;
             }
         });
-
         document.getElementById('list').innerHTML = html;
     }
 

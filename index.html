@@ -53,7 +53,6 @@
         }
         .banner h1 { margin: 0; font-size: 36px; font-weight: 900; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase; }
         
-        /* ✅ AQUI ESTÁ A DATA DE LANÇAMENTO E ATUALIZAÇÕES */
         .dates {
             display: flex;
             justify-content: space-around;
@@ -103,19 +102,15 @@
     <div class="banner">
         <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
         
-        <!-- ✅ DATAS ADICIONADAS AQUI -->
         <div class="dates">
             <div class="date-box">📅 LANÇAMENTO: 03/05/2026</div>
-            <div class="date-box">🔄 ÚLTIMA ATUALIZAÇÃO: 03/05/2026</div>
+            <div class="date-box">🔄 ÚLTIMA ATUALIZAÇÃO: 05/05/2026</div>
+            <div class="date-box">✅ VERSÃO COMPLETA</div>
         </div>
     </div>
 
     <div class="label">ESCOLHA O JOGO</div>
-    <div class="grid">
-        <button class="btn active" id="g-v" onclick="setGame('v')">GTA V</button>
-        <button class="btn" id="g-iv" onclick="setGame('iv')">GTA IV</button>
-        <button class="btn" id="g-sa" onclick="setGame('sa')">GTA SA</button>
-    </div>
+    <div id="games" class="grid"></div>
 
     <div class="label">PLATAFORMA</div>
     <div id="modes" class="grid"></div>
@@ -125,113 +120,321 @@
     <div id="list"></div>
 
 <script>
-    // SCRIPT PARA SUMIR O LOAD
-    setTimeout(() => {
-        document.getElementById('splash').style.opacity = '0';
+    // Tela de carregamento
+    window.onload = function() {
         setTimeout(() => {
-            document.getElementById('splash').style.display = 'none';
-        }, 500);
-    }, 3000);
+            document.getElementById('splash').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('splash').style.display = 'none';
+            }, 500);
+        }, 2000);
+    };
 
+    // BASE DE DADOS COMPLETA
     const db = {
         v: {
             m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
             'PS4 / PS5': [
-                {n:"Vida e Armadura", c:"O, L1, TRI, R2, X, QUAD, O, DIR, QUAD, L1, L1, L1"},
-                {n:"Invencibilidade", c:"DIR, X, DIR, ESQ, DIR, R1, DIR, ESQ, X, TRI"},
-                {n:"Todas as Armas", c:"TRI, R2, ESQ, L1, X, DIR, TRI, BAIXO, QUAD, L1, L1, L1"},
-                {n:"Diminuir Procurado", c:"R1, R1, O, R2, DIR, ESQ, DIR, ESQ, DIR, ESQ"},
-                {n:"Aumentar Procurado", c:"R1, R1, O, R2, ESQ, DIR, ESQ, DIR, ESQ, DIR"},
-                {n:"Super Pulo", c:"ESQ, ESQ, TRI, TRI, DIR, DIR, ESQ, DIR, QUAD, R1, R2"},
-                {n:"Skyfall", c:"L1, L2, R1, R2, ESQ, DIR, ESQ, DIR, L1, L2, R1, R2, ESQ, DIR, ESQ, DIR"},
-                {n:"Munição Explosiva", c:"DIR, QUAD, X, ESQ, R1, R2, ESQ, DIR, DIR, L1, L1, L1"},
-                {n:"Helicóptero Buzzard", c:"O, O, L1, O, O, O, L1, L2, R1, TRI, O, TRI"},
-                {n:"Carro Comet", c:"R1, O, R2, DIR, L1, L2, X, X, QUAD, R1"}
+                {n:"Invencibilidade", c:"▲ △ ✕ ○ △ ▲ ▲ △ ✕"},
+                {n:"Armas e Munição", c:"△ ✕ ▲ L2 ▲ L2 ▲ L2"},
+                {n:"Armas Especiais", c:"L1 R1 ✕ △ ▲ ○ L1 R1"},
+                {n:"Modo Bêbado", c:"▲ ▲ ○ □ L2 L1 ✕ △ ✕"},
+                {n:"Correr Rápido", c:"△ ▲ ○ ○ □ L2 L1 ✕"},
+                {n:"Pular Alto", c:"▲ ▲ □ △ ✕ ○ ▲ ▲ ▲"},
+                {n:"Gravidade da Lua", c:"L1 L2 R1 R2 ○ △ L1 ▲"},
+                {n:"Munição Explosiva", c:"R2 L2 L1 R1 ○ ○ △ ✕"},
+                {n:"Câmera Lenta", c:"L1 R2 R2 ▲ L2 R1 ✕ ▲"},
+                {n:"Mudar Clima", c:"R2 ✕ L1 L2 L2 ✕ ✕"},
+                {n:"Spawn Buzzard", c:"○ ○ △ L1 L1 □ ○ △"},
+                {n:"Spawn Cometa", c:"R1 ○ R2 △ L1 L1 □"},
+                {n:"Spawn PCJ 600", c:"R1 ▲ L2 ○ □ ○ ▲ L1 L1"},
+                {n:"Spawn Sanchez", c:"○ ✕ △ ○ △ ▲ ▲ ▲"}
             ],
             'CELULAR': [
-                {n:"Vida e Armadura", c:"1-999-887-853"},
                 {n:"Invencibilidade", c:"1-999-724-654-5537"},
-                {n:"Diminuir Procurado", c:"1-999-529-93787"},
-                {n:"Super Pulo", c:"1-999-467-8648"},
-                {n:"Helicóptero", c:"1-999-289-9633"}
+                {n:"Armas e Munição", c:"1-999-289-723-462"},
+                {n:"Armas Especiais", c:"1-999-282-253-734"},
+                {n:"Modo Bêbado", c:"1-999-547-861-4735"},
+                {n:"Correr Rápido", c:"1-999-228-2463"},
+                {n:"Pular Alto", c:"1-999-467-8648"},
+                {n:"Gravidade da Lua", c:"1-999-356-2837"},
+                {n:"Munição Explosiva", c:"1-999-256-3786"},
+                {n:"Câmera Lenta", c:"1-999-756-2666"},
+                {n:"Mudar Clima", c:"1-999-625-5487"},
+                {n:"Spawn Buzzard", c:"1-999-289-9633"},
+                {n:"Spawn Cometa", c:"1-999-266-38"},
+                {n:"Spawn PCJ 600", c:"1-999-226-348"},
+                {n:"Spawn Sanchez", c:"1-999-633-2462"}
             ],
             'PC': [
-                {n:"Vida e Armadura", c:"TURTLE"},
-                {n:"Invencibilidade", c:"PAINKILLER"},
-                {n:"Armas", c:"TOOLUP"},
-                {n:"Super Pulo", c:"HOPTOIT"}
+                {n:"Invencibilidade", c:"PAINON"},
+                {n:"Armas e Munição", c:"TOOLUP"},
+                {n:"Armas Especiais", c:"SPECIALK"},
+                {n:"Modo Bêbado", c:"LIQUOR"},
+                {n:"Correr Rápido", c:"CATCHME"},
+                {n:"Pular Alto", c:"HOPTOIT"},
+                {n:"Gravidade da Lua", c:"FLOATER"},
+                {n:"Munição Explosiva", c:"HIGHEX"},
+                {n:"Câmera Lenta", c:"SLOWMO"},
+                {n:"Mudar Clima", c:"MAKEITRAIN"},
+                {n:"Spawn Buzzard", c:"BUZZOFF"},
+                {n:"Spawn Cometa", c:"COMET"},
+                {n:"Spawn PCJ 600", c:"ROCKET"},
+                {n:"Spawn Sanchez", c:"OFFROAD"}
+            ],
+            'XBOX ONE': [
+                {n:"Invencibilidade", c:"Y △ X B △ Y Y △ X"},
+                {n:"Armas e Munição", c:"△ X Y LB Y Y Y X"},
+                {n:"Armas Especiais", c:"LB RB X △ Y LB RB"},
+                {n:"Modo Bêbado", c:"Y Y B □ LB LB X △ X"},
+                {n:"Correr Rápido", c:"△ Y B B □ LB LB X"},
+                {n:"Pular Alto", c:"Y Y □ △ X B Y Y Y"},
+                {n:"Gravidade da Lua", c:"LB LB RB RB B △ LB Y"},
+                {n:"Munição Explosiva", c:"RB LB LB RB B B △ X"},
+                {n:"Câmera Lenta", c:"LB RB RB Y LB RB X Y"},
+                {n:"Mudar Clima", c:"RB X LB LB LB X X"},
+                {n:"Spawn Buzzard", c:"B B △ LB LB □ B △"},
+                {n:"Spawn Cometa", c:"RB B RB △ LB LB □"},
+                {n:"Spawn PCJ 600", c:"RB Y LB B □ B Y LB LB"},
+                {n:"Spawn Sanchez", c:"B X △ B △ Y Y Y"}
+            ]
+        },
+        iv: {
+            m: ['PS3', 'XBOX 360', 'PC'],
+            'PS3': [
+                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
+                {n:"Remover Nível de Procurado", c:"267-555-0100"},
+                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
+                {n:"Mudar Clima", c:"468-555-0100"},
+                {n:"Pacote de Armas 1", c:"486-555-0100"},
+                {n:"Pacote de Armas 2", c:"486-555-0150"},
+                {n:"Criar Annihilator", c:"359-555-0100"},
+                {n:"Criar Banshee", c:"265-555-2423"},
+                {n:"Criar Buffalo", c:"227-555-0100"},
+                {n:"Criar Comet", c:"227-555-0175"},
+                {n:"Criar Jetmax", c:"938-555-0100"},
+                {n:"Criar NRG-900", c:"625-555-0100"},
+                {n:"Criar Turismo", c:"227-555-0147"},
+                {n:"Criar Super GT", c:"227-555-0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
+                {n:"Criar Sprinter", c:"227-555-0176"}
+            ],
+            'XBOX 360': [
+                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
+                {n:"Remover Nível de Procurado", c:"267-555-0100"},
+                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
+                {n:"Mudar Clima", c:"468-555-0100"},
+                {n:"Pacote de Armas 1", c:"486-555-0100"},
+                {n:"Pacote de Armas 2", c:"486-555-0150"},
+                {n:"Criar Annihilator", c:"359-555-0100"},
+                {n:"Criar Banshee", c:"265-555-2423"},
+                {n:"Criar Buffalo", c:"227-555-0100"},
+                {n:"Criar Comet", c:"227-555-0175"},
+                {n:"Criar Jetmax", c:"938-555-0100"},
+                {n:"Criar NRG-900", c:"625-555-0100"},
+                {n:"Criar Turismo", c:"227-555-0147"},
+                {n:"Criar Super GT", c:"227-555-0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
+                {n:"Criar Sprinter", c:"227-555-0176"}
+            ],
+            'PC': [
+                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
+                {n:"Remover Nível de Procurado", c:"267-555-0100"},
+                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
+                {n:"Mudar Clima", c:"468-555-0100"},
+                {n:"Pacote de Armas 1", c:"486-555-0100"},
+                {n:"Pacote de Armas 2", c:"486-555-0150"},
+                {n:"Criar Annihilator", c:"359-555-0100"},
+                {n:"Criar Banshee", c:"265-555-2423"},
+                {n:"Criar Buffalo", c:"227-555-0100"},
+                {n:"Criar Comet", c:"227-555-0175"},
+                {n:"Criar Jetmax", c:"938-555-0100"},
+                {n:"Criar NRG-900", c:"625-555-0100"},
+                {n:"Criar Turismo", c:"227-555-0147"},
+                {n:"Criar Super GT", c:"227-555-0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
+                {n:"Criar Sprinter", c:"227-555-0176"},
+                {n:"Saúde (Teclado)", c:"GUNSLINGER"},
+                {n:"Armas (Teclado)", c:"WEAPONS"},
+                {n:"Munição (Teclado)", c:"AMMO"}
             ]
         },
         sa: {
-            m: ['PS2', 'PC', 'XBOX 360'],
+            m: ['PS2', 'XBOX 360', 'PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
             'PS2': [
-                {n:"Vida, Colete e $250k", c:"R1, R2, L1, X, ESQ, BAIXO, DIR, CIMA, ESQ, BAIXO, DIR, CIMA"},
-                {n:"Mochila a Jato", c:"L1, L2, R1, R2, CIMA, BAIXO, ESQ, DIR, L1, L2, R1, R2, CIMA, BAIXO, ESQ, DIR"},
-                {n:"Tanque Rhino", c:"O, O, L1, O, O, O, L1, L2, R1, TRI, O, TRI"},
-                {n:"Carros Voadores", c:"QUAD, BAIXO, L2, CIMA, L1, O, CIMA, X, ESQ"},
-                {n:"Nunca Procurado", c:"O, DIR, O, DIR, ESQ, QUAD, TRI, CIMA"},
-                {n:"Super Soco", c:"CIMA, ESQ, X, TRI, R1, O, O, O, L2"}
+                {n:"Vida, Colete e $250k", c:"✕ ▲ □ ▼ ▲ ▲ △ ○"},
+                {n:"Armas Profissionais", c:"▲ □ ✕ △ L1 R1 ○ ▼"},
+                {n:"Munição Infinita", c:"L1 R1 □ ▲ ▼ ○ △ ▲"},
+                {n:"Procurado Máximo", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
+                {n:"Tirar Procurado", c:"R1 R1 ○ R2 ▲ □ ▼ ✕"},
+                {n:"Spawn Rhino (Tanque)", c:"○ ○ L1 ○ ○ ○ L1 L2 □ ○ △"},
+                {n:"Spawn Hunter", c:"○ ✕ ▲ ○ ○ △ ✕ ○"},
+                {n:"Spawn Hydra", c:"▲ ✕ △ ▲ ▲ ▲ ✕ ○"},
+                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
+                {n:"Spawn Quad", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Spawn Hotring", c:"R1 ○ R2 △ L1 L1 □ R1 R2"},
+                {n:"Paraquedas", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
+                {n:"Gravidade Baixa", c:"▲ ▼ ▲ ▲ ✕ △ ▲ ✕"},
+                {n:"Câmera Lenta", c:"▲ ▲ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Carros Voadores", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
+                {n:"Trânsito Agressivo", c:"R2 ✕ ▲ L1 L1 ▲ R2"},
+                {n:"Respeito Máximo", c:"L1 R1 △ ○ △ R1 L1 □ R2 R2"},
+                {n:"Sex Appeal Máximo", c:"○ △ ○ △ △ □ ○ △"},
+                {n:"Stamina Máxima", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 □ △"}
+            ],
+            'XBOX 360': [
+                {n:"Vida, Colete e $250k", c:"A △ Y B A A Y X B"},
+                {n:"Armas Profissionais", c:"A Y X B LB RB B ▼"},
+                {n:"Munição Infinita", c:"LB RB Y A ▼ B Y A"},
+                {n:"Procurado Máximo", c:"A A Y B A B X A"},
+                {n:"Tirar Procurado", c:"RB RB B RT A Y ▼ X"},
+                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT Y B A"},
+                {n:"Spawn Hunter", c:"B X A B B Y X B"},
+                {n:"Spawn Hydra", c:"A X Y A A A X B"},
+                {n:"Spawn Jetpack", c:"LB LT RB RT A ▼ B Y"},
+                {n:"Spawn Quad", c:"A B X Y A A Y X"},
+                {n:"Spawn Hotring", c:"RB B RT Y LB LB Y RB RT"},
+                {n:"Paraquedas", c:"LB LT RB RT A ▼ B Y"},
+                {n:"Gravidade Baixa", c:"A ▼ A A X Y A X"},
+                {n:"Câmera Lenta", c:"A A X Y A A Y X"},
+                {n:"Carros Voadores", c:"A A Y B A B X A"},
+                {n:"Trânsito Agressivo", c:"RT X A LB LB A RT"},
+                {n:"Respeito Máximo", c:"LB RB Y B Y RB LB Y RT RT"},
+                {n:"Sex Appeal Máximo", c:"B Y B Y Y X B Y"},
+                {n:"Stamina Máxima", c:"A B X Y A A Y X"},
+                {n:"Explosões", c:"RT LT RB RB LT LT Y A"}
+            ],
+            'PS4 / PS5': [
+                {n:"Vida, Colete e $250k", c:"✕ ▲ □ ▼ ▲ ▲ △ ○"},
+                {n:"Armas Profissionais", c:"▲ □ ✕ △ L1 R1 ○ ▼"},
+                {n:"Munição Infinita", c:"L1 R1 □ ▲ ▼ ○ △ ▲"},
+                {n:"Procurado Máximo", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
+                {n:"Tirar Procurado", c:"R1 R1 ○ R2 ▲ □ ▼ ✕"},
+                {n:"Spawn Rhino (Tanque)", c:"○ ○ L1 ○ ○ ○ L1 L2 □ ○ △"},
+                {n:"Spawn Hunter", c:"○ ✕ ▲ ○ ○ △ ✕ ○"},
+                {n:"Spawn Hydra", c:"▲ ✕ △ ▲ ▲ ▲ ✕ ○"},
+                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
+                {n:"Spawn Quad", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Spawn Hotring", c:"R1 ○ R2 △ L1 L1 □ R1 R2"},
+                {n:"Paraquedas", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
+                {n:"Gravidade Baixa", c:"▲ ▼ ▲ ▲ ✕ △ ▲ ✕"},
+                {n:"Câmera Lenta", c:"▲ ▲ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Carros Voadores", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
+                {n:"Trânsito Agressivo", c:"R2 ✕ ▲ L1 L1 ▲ R2"},
+                {n:"Respeito Máximo", c:"L1 R1 △ ○ △ R1 L1 □ R2 R2"},
+                {n:"Sex Appeal Máximo", c:"○ △ ○ △ △ □ ○ △"},
+                {n:"Stamina Máxima", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
+                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 □ △"}
+            ],
+            'CELULAR': [
+                {n:"Vida, Colete e $250k", c:"1-999-662-345"},
+                {n:"Armas Profissionais", c:"1-999-486-426"},
+                {n:"Munição Infinita", c:"1-999-626-426"},
+                {n:"Procurado Máximo", c:"1-999-384-4833"},
+                {n:"Tirar Procurado", c:"1-999-529-5377"},
+                {n:"Spawn Rhino (Tanque)", c:"1-999-868-4663"},
+                {n:"Spawn Hunter", c:"1-999-486-8374"},
+                {n:"Spawn Hydra", c:"1-999-347-6392"},
+                {n:"Spawn Jetpack", c:"1-999-538-7522"},
+                {n:"Spawn Quad", c:"1-999-783-2738"},
+                {n:"Spawn Hotring", c:"1-999-467-8464"},
+                {n:"Paraquedas", c:"1-999-538-7522"},
+                {n:"Gravidade Baixa", c:"1-999-728-4322"},
+                {n:"Câmera Lenta", c:"1-999-756-2666"},
+                {n:"Carros Voadores", c:"1-999-356-2837"},
+                {n:"Trânsito Agressivo", c:"1-999-384-4833"},
+                {n:"Respeito Máximo", c:"1-999-737-8378"},
+                {n:"Sex Appeal Máximo", c:"1-999-739-3255"},
+                {n:"Stamina Máxima", c:"1-999-783-2738"},
+                {n:"Explosões", c:"1-999-486-4263"}
             ],
             'PC': [
-                {n:"Vida, Colete e Dinheiro", c:"HESOYAM"},
-                {n:"Jetpack", c:"ROCKETMAN"},
-                {n:"Tanque", c:"AIWPRTON"},
-                {n:"Carros Voadores", c:"CHITTYCHITTYBANGBANG"},
-                {n:"Nunca Procurado", c:"AEZAKMI"}
+                {n:"Vida, Colete e $250k", c:"HESOYAM"},
+                {n:"Armas Profissionais", c:"PROFESSIONALSKIT"},
+                {n:"Munição Infinita", c:"FULLCLIP"},
+                {n:"Procurado Máximo", c:"BRINGITON"},
+                {n:"Tirar Procurado", c:"AEZAKMI"},
+                {n:"Spawn Rhino (Tanque)", c:"PANZER"},
+                {n:"Spawn Hunter", c:"ONSOON"},
+                {n:"Spawn Hydra", c:"JUMPJET"},
+                {n:"Spawn Jetpack", c:"ROCKETMAN"},
+                {n:"Spawn Quad", c:"KGGGDKP"},
+                {n:"Spawn Hotring", c:"VROCKPO"},
+                {n:"Paraquedas", c:"LEAVEMEALONE"},
+                {n:"Gravidade Baixa", c:"JCNRUAD"},
+                {n:"Câmera Lenta", c:"SLOWITDOWN"},
+                {n:"Carros Voadores", c:"COMEFLYWITHME"},
+                {n:"Trânsito Agressivo", c:"YLTEICZ"},
+                {n:"Respeito Máximo", c:"WORSHIPME"},
+                {n:"Sex Appeal Máximo", c:"HELLOLADIES"},
+                {n:"Stamina Máximo", c:"CVWKXAM"},
+                {n:"Explosões", c:"MUNASEF"}
+            ],
+            'XBOX ONE': [
+                {n:"Vida, Colete e $250k", c:"A △ Y B A A Y X B"},
+                {n:"Armas Profissionais", c:"A Y X B LB RB B ▼"},
+                {n:"Munição Infinita", c:"LB RB Y A ▼ B Y A"},
+                {n:"Procurado Máximo", c:"A A Y B A B X A"},
+                {n:"Tirar Procurado", c:"RB RB B RT A Y ▼ X"},
+                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT Y B A"},
+                {n:"Spawn Hunter", c:"B X A B B Y X B"},
+                {n:"Spawn Hydra", c:"A X Y A A A X B"},
+                {n:"Spawn Jetpack", c:"LB LT RB RT A ▼ B Y"},
+                {n:"Spawn Quad", c:"A B X Y A A Y X"},
+                {n:"Spawn Hotring", c:"RB B RT Y LB LB Y RB RT"},
+                {n:"Paraquedas", c:"LB LT RB RT A ▼ B Y"},
+                {n:"Gravidade Baixa", c:"A ▼ A A X Y A X"},
+                {n:"Câmera Lenta", c:"A A X Y A A Y X"},
+                {n:"Carros Voadores", c:"A A Y B A B X A"},
+                {n:"Trânsito Agressivo", c:"RT X A LB LB A RT"},
+                {n:"Respeito Máximo", c:"LB RB Y B Y RB LB Y RT RT"},
+                {n:"Sex Appeal Máximo", c:"B Y B Y Y X B Y"},
+                {n:"Stamina Máxima", c:"A B X Y A A Y X"},
+                {n:"Explosões", c:"RT LT RB RB LT LT Y A"}
             ]
         }
     }
 
     let currentGame = 'v';
-    let currentMode = 'PS4 / PS5';
+    let currentMode = db[currentGame].m[0];
 
-    function setGame(g) {
-        currentGame = g;
-        document.querySelectorAll('.grid')[0].querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('g-'+g).classList.add('active');
+    function renderGames() {
+        let html = '';
+        let games = [{id:'v', name:'GTA V'}, {id:'iv', name:'GTA IV'}, {id:'sa', name:'GTA SA'}];
+        games.forEach(g => {
+            html += `<button class="btn ${g.id === currentGame ? 'active' : ''}" onclick="setGame('${g.id}')">${g.name}</button>`;
+        });
+        document.getElementById('games').innerHTML = html;
         renderModes();
+    }
+
+    function setGame(id) {
+        currentGame = id;
+        currentMode = db[currentGame].m[0];
+        renderGames();
+    }
+
+    function renderModes() {
+        let html = '';
+        db[currentGame].m.forEach(m => {
+            html += `<button class="btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">${m}</button>`;
+        });
+        document.getElementById('modes').innerHTML = html;
         renderList();
     }
 
     function setMode(m) {
         currentMode = m;
-        document.querySelectorAll('.grid')[1].querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        renderList();
+        renderModes();
     }
 
-    function renderModes() {
+    function renderList(filter = '') {
         let html = '';
-        db[currentGame].m.forEach(mode => {
-            html += `<button class="btn" onclick="setMode('${mode}')">${mode}</button>`;
-        });
-        document.getElementById('modes').innerHTML = html;
-        document.querySelectorAll('.grid')[1].querySelectorAll('.btn')[0].classList.add('active');
-        currentMode = db[currentGame].m[0];
-    }
-
-    function renderList() {
-        let html = '';
-        db[currentGame][currentMode].forEach(item => {
-            html += `
-            <div class="card">
-                <span class="c-name">${item.n}</span>
-                <div class="c-code-box">
-                    <span class="c-code">${item.c}</span>
-                </div>
-            </div>
-            `;
-        });
-        document.getElementById('list').innerHTML = html;
-    }
-
-    function search(texto) {
-        let termo = texto.toLowerCase();
-        let html = '';
-        const lista = db[currentGame][currentMode];
+        let items = db[currentGame][currentMode];
         
-        lista.forEach(item => {
-            if(item.n.toLowerCase().includes(termo) || item.c.toLowerCase().includes(termo)) {
+        items.forEach(item => {
+            if(!filter || item.n.toLowerCase().includes(filter.toLowerCase())) {
                 html += `
                 <div class="card">
                     <span class="c-name">${item.n}</span>
@@ -245,10 +448,11 @@
         document.getElementById('list').innerHTML = html;
     }
 
-    // INICIO
-    renderModes();
-    renderList();
+    function search(text) {
+        renderList(text);
+    }
 
+    renderGames();
 </script>
 
 </body>

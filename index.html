@@ -9,17 +9,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--bg); color: #fff; padding: 15px; }
 
-        /* TELA DE CARREGAMENTO */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #000 0%, #0d1117 100%);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999; transition: opacity 0.5s ease;
         }
-        .splash-text {
-            text-align: center;
-            animation: pulse 1.5s infinite;
-        }
+        .splash-text { text-align: center; animation: pulse 1.5s infinite; }
         .splash-text h1 {
             font-size: 28px;
             background: linear-gradient(90deg, #33ccff, #ff00ff);
@@ -31,22 +27,12 @@
             border: 4px solid rgba(255,255,255,0.1);
             border-left-color: var(--neon);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin: 20px auto 0;
+            width: 40px; height: 40px; margin: 20px auto 0;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
+        @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+        @keyframes pulse { 0%{transform:scale(1);opacity:.8} 50%{transform:scale(1.05);opacity:1} 100%{transform:scale(1);opacity:.8} }
 
-        /* RESTO DO DESIGN */
         .banner { 
             background: linear-gradient(135deg, #33ccff 0%, #ff00ff 100%); 
             padding: 50px 20px; border-radius: 40px; text-align: center; margin-bottom: 30px; 
@@ -54,19 +40,11 @@
         .banner h1 { margin: 0; font-size: 36px; font-weight: 900; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase; }
         
         .dates {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
+            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; margin-top: 20px;
         }
         .date-box {
-            font-size: 11px;
-            font-weight: bold;
-            background: rgba(0,0,0,0.2);
-            display: inline-block;
-            padding: 6px 15px;
-            border-radius: 20px;
+            font-size: 11px; font-weight: bold; background: rgba(0,0,0,0.2);
+            display: inline-block; padding: 6px 15px; border-radius: 20px;
         }
 
         .label { font-size: 14px; color: var(--neon); font-weight: bold; margin: 25px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
@@ -87,7 +65,7 @@
         .card::before { content: ''; position: absolute; left: 0; top: 15%; height: 70%; width: 5px; background: var(--neon); border-radius: 0 5px 5px 0; }
         .c-name { font-weight: bold; margin-bottom: 15px; font-size: 20px; display: block; }
         .c-code-box { background: #0d1117; padding: 20px; border-radius: 15px; }
-        .c-code { color: var(--neon); font-family: monospace; font-size: 14px; display: block; line-height: 1.6; word-spacing: 5px; letter-spacing: 1px; }
+        .c-code { color: var(--neon); font-family: monospace; font-size: 18px; display: block; line-height: 1.8; word-spacing: 6px; letter-spacing: 1px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -101,11 +79,10 @@
 
     <div class="banner">
         <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
-        
         <div class="dates">
             <div class="date-box">📅 LANÇAMENTO: 03/05/2026</div>
-            <div class="date-box">🔄 ÚLTIMA ATUALIZAÇÃO: 05/05/2026</div>
-            <div class="date-box">✅ VERSÃO COMPLETA</div>
+            <div class="date-box">🔄 ATUALIZADO: 28/07/2026</div>
+            <div class="date-box">✅ TUDO ESCRITO</div>
         </div>
     </div>
 
@@ -120,140 +97,139 @@
     <div id="list"></div>
 
 <script>
-    // Tela de carregamento
     window.onload = function() {
         setTimeout(() => {
             document.getElementById('splash').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('splash').style.display = 'none';
-            }, 500);
-        }, 2000);
+            setTimeout(() => document.getElementById('splash').style.display = 'none', 500);
+        }, 1800);
     };
 
-    // BASE DE DADOS COMPLETA
     const db = {
         v: {
             m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
             'PS4 / PS5': [
-                {n:"Invencibilidade", c:"▲ △ ✕ ○ △ ▲ ▲ △ ✕"},
-                {n:"Armas e Munição", c:"△ ✕ ▲ L2 ▲ L2 ▲ L2"},
-                {n:"Armas Especiais", c:"L1 R1 ✕ △ ▲ ○ L1 R1"},
-                {n:"Modo Bêbado", c:"▲ ▲ ○ □ L2 L1 ✕ △ ✕"},
-                {n:"Correr Rápido", c:"△ ▲ ○ ○ □ L2 L1 ✕"},
-                {n:"Pular Alto", c:"▲ ▲ □ △ ✕ ○ ▲ ▲ ▲"},
-                {n:"Gravidade da Lua", c:"L1 L2 R1 R2 ○ △ L1 ▲"},
-                {n:"Munição Explosiva", c:"R2 L2 L1 R1 ○ ○ △ ✕"},
-                {n:"Câmera Lenta", c:"L1 R2 R2 ▲ L2 R1 ✕ ▲"},
-                {n:"Mudar Clima", c:"R2 ✕ L1 L2 L2 ✕ ✕"},
-                {n:"Spawn Buzzard", c:"○ ○ △ L1 L1 □ ○ △"},
-                {n:"Spawn Cometa", c:"R1 ○ R2 △ L1 L1 □"},
-                {n:"Spawn PCJ 600", c:"R1 ▲ L2 ○ □ ○ ▲ L1 L1"},
-                {n:"Spawn Sanchez", c:"○ ✕ △ ○ △ ▲ ▲ ▲"}
+                {n:"Vida e colete completos", c:"Círculo L1 Triângulo R2 X Quadrado Círculo Direita Quadrado L1 L1 L1"},
+                {n:"Invencibilidade", c:"Direita X Direita Esquerda Direita R1 Direita Esquerda X Triângulo"},
+                {n:"Aumentar nível de procurado", c:"R1 R1 Círculo R2 Esquerda Direita Esquerda Direita Esquerda Direita"},
+                {n:"Diminuir nível de procurado", c:"R1 R1 Círculo R2 Direita Esquerda Direita Esquerda Direita Esquerda"},
+                {n:"Super pulo", c:"L2 L2 Quadrado Círculo Círculo L2 Quadrado Quadrado Esquerda Direita X"},
+                {n:"Corrida rápida", c:"Triângulo Esquerda Direita Direita L2 L1 Quadrado"},
+                {n:"Nado rápido", c:"Esquerda Esquerda L1 Direita Direita R2 Esquerda L2 Direita"},
+                {n:"Mira em câmera lenta", c:"Quadrado L2 R1 Triângulo Esquerda Quadrado L2 Direita X"},
+                {n:"Câmera lenta", c:"Triângulo Esquerda Direita Direita Quadrado R2 R1"},
+                {n:"Gravidade lunar", c:"Esquerda Esquerda L1 R1 L1 Direita Esquerda L1 Esquerda"},
+                {n:"Modo bêbado", c:"Triângulo Direita Direita Esquerda Direita Quadrado Círculo Esquerda"},
+                {n:"Parar de correr", c:"Círculo Esquerda Esquerda L1 Esquerda Esquerda Quadrado Triângulo Direita"},
+                {n:"Armas", c:"Triângulo R2 Esquerda L1 X Direita Triângulo Baixo Quadrado L1 L1 L1"},
+                {n:"Recarregar Habilidade", c:"X X Quadrado R1 L1 X Direita Esquerda X"},
+                {n:"Paraquedas", c:"Esquerda Direita L1 L2 R1 R2 R2 Esquerda Esquerda Direita L1"},
+                {n:"Cair do céu", c:"L1 L2 R1 R2 Esquerda Direita Esquerda Direita L1 L2 R1 R2 Esquerda Direita Esquerda Direita"},
+                {n:"Ataques corpo a corpo explosivos", c:"Direita Esquerda X Triângulo R1 Círculo Círculo Círculo L2"},
+                {n:"Munição Explosiva", c:"Direita Quadrado X Esquerda R1 R2 Esquerda Direita Direita L1 L1 L1"},
+                {n:"Munição Inflamável", c:"L1 R1 Quadrado R1 Esquerda R2 R1 Esquerda Quadrado Direita L1 L1"},
+                {n:"Mudar o Clima", c:"R2 X L1 L1 L2 L2 L2 Quadrado"},
+                {n:"Modo drift", c:"Triângulo R1 R1 Esquerda R1 L1 R2 L1"},
+                {n:"Bicicleta", c:"Esquerda Esquerda Direita Direita Esquerda Direita Quadrado Círculo Triângulo R1 R2"},
+                {n:"Helicóptero Buzzard", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 R1 Triângulo Círculo Triângulo"},
+                {n:"Carro Comet", c:"R1 Círculo R2 Direita L1 L2 X X Quadrado R1"},
+                {n:"Moto Sanchez", c:"Círculo X L1 Círculo Círculo L1 Círculo R1 R2 L2 L1 L1"},
+                {n:"Moto PCJ‑600", c:"R1 Direita Esquerda Direita R2 Esquerda Direita Quadrado Direita L2 L1 L1"},
+                {n:"Carrinho de Golfe", c:"Círculo L1 Esquerda R1 L2 X R1 L1 Círculo X"},
+                {n:"Caminhão de Lixo Trashmaster", c:"Círculo R1 Círculo R1 Esquerda Esquerda R1 L1 Círculo Direita"},
+                {n:"Carro Rapid GT", c:"R2 L1 Círculo Direita L1 R1 Direita Esquerda Círculo R2"},
+                {n:"Limousine", c:"R2 Direita L2 Esquerda Esquerda R1 L1 Círculo Direita"},
+                {n:"Avião de Acrobacias", c:"Círculo Direita L1 L2 Esquerda R1 L1 L1 Esquerda Esquerda X Triângulo"},
+                {n:"Avião Duster", c:"Direita Esquerda R1 R1 R1 Esquerda Triângulo Triângulo X Círculo L1 L1"}
             ],
             'CELULAR': [
                 {n:"Invencibilidade", c:"1-999-724-654-5537"},
                 {n:"Armas e Munição", c:"1-999-289-723-462"},
-                {n:"Armas Especiais", c:"1-999-282-253-734"},
-                {n:"Modo Bêbado", c:"1-999-547-861-4735"},
-                {n:"Correr Rápido", c:"1-999-228-2463"},
-                {n:"Pular Alto", c:"1-999-467-8648"},
-                {n:"Gravidade da Lua", c:"1-999-356-2837"},
+                {n:"Corrida rápida", c:"1-999-228-2463"},
+                {n:"Super pulo", c:"1-999-467-8648"},
+                {n:"Mudar o Clima", c:"1-999-625-5487"},
+                {n:"Gravidade lunar", c:"1-999-356-2837"},
                 {n:"Munição Explosiva", c:"1-999-256-3786"},
-                {n:"Câmera Lenta", c:"1-999-756-2666"},
-                {n:"Mudar Clima", c:"1-999-625-5487"},
+                {n:"Câmera lenta", c:"1-999-756-2666"},
                 {n:"Spawn Buzzard", c:"1-999-289-9633"},
-                {n:"Spawn Cometa", c:"1-999-266-38"},
-                {n:"Spawn PCJ 600", c:"1-999-226-348"},
+                {n:"Spawn Comet", c:"1-999-266-3878"},
+                {n:"Spawn PCJ 600", c:"1-999-226-3489"},
                 {n:"Spawn Sanchez", c:"1-999-633-2462"}
             ],
             'PC': [
-                {n:"Invencibilidade", c:"PAINON"},
+                {n:"Invencibilidade", c:"PAINFULLYSTRONGER"},
                 {n:"Armas e Munição", c:"TOOLUP"},
-                {n:"Armas Especiais", c:"SPECIALK"},
-                {n:"Modo Bêbado", c:"LIQUOR"},
-                {n:"Correr Rápido", c:"CATCHME"},
-                {n:"Pular Alto", c:"HOPTOIT"},
-                {n:"Gravidade da Lua", c:"FLOATER"},
+                {n:"Corrida rápida", c:"CATCHME"},
+                {n:"Super pulo", c:"HOPTOIT"},
+                {n:"Gravidade lunar", c:"FLOATER"},
                 {n:"Munição Explosiva", c:"HIGHEX"},
-                {n:"Câmera Lenta", c:"SLOWMO"},
-                {n:"Mudar Clima", c:"MAKEITRAIN"},
+                {n:"Câmera lenta", c:"SLOWMO"},
+                {n:"Mudar o Clima", c:"MAKEITRAIN"},
                 {n:"Spawn Buzzard", c:"BUZZOFF"},
-                {n:"Spawn Cometa", c:"COMET"},
-                {n:"Spawn PCJ 600", c:"ROCKET"},
+                {n:"Spawn Comet", c:"COMET"},
+                {n:"Spawn PCJ‑600", c:"ROCKET"},
                 {n:"Spawn Sanchez", c:"OFFROAD"}
             ],
             'XBOX ONE': [
-                {n:"Invencibilidade", c:"Y △ X B △ Y Y △ X"},
-                {n:"Armas e Munição", c:"△ X Y LB Y Y Y X"},
-                {n:"Armas Especiais", c:"LB RB X △ Y LB RB"},
-                {n:"Modo Bêbado", c:"Y Y B □ LB LB X △ X"},
-                {n:"Correr Rápido", c:"△ Y B B □ LB LB X"},
-                {n:"Pular Alto", c:"Y Y □ △ X B Y Y Y"},
-                {n:"Gravidade da Lua", c:"LB LB RB RB B △ LB Y"},
-                {n:"Munição Explosiva", c:"RB LB LB RB B B △ X"},
-                {n:"Câmera Lenta", c:"LB RB RB Y LB RB X Y"},
-                {n:"Mudar Clima", c:"RB X LB LB LB X X"},
-                {n:"Spawn Buzzard", c:"B B △ LB LB □ B △"},
-                {n:"Spawn Cometa", c:"RB B RB △ LB LB □"},
-                {n:"Spawn PCJ 600", c:"RB Y LB B □ B Y LB LB"},
-                {n:"Spawn Sanchez", c:"B X △ B △ Y Y Y"}
+                {n:"Invencibilidade", c:"Y Esquerda X B Esquerda Y Y Esquerda X"},
+                {n:"Spawn Comet", c:"RB B RB Direita LB LT X X Quadrado RB"},
+                {n:"Corrida rápida", c:"Y Esquerda Direita Direita LT LB Quadrado"}
             ]
         },
         iv: {
             m: ['PS3', 'XBOX 360', 'PC'],
             'PS3': [
-                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
-                {n:"Remover Nível de Procurado", c:"267-555-0100"},
-                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
-                {n:"Mudar Clima", c:"468-555-0100"},
-                {n:"Pacote de Armas 1", c:"486-555-0100"},
-                {n:"Pacote de Armas 2", c:"486-555-0150"},
-                {n:"Criar Annihilator", c:"359-555-0100"},
-                {n:"Criar Banshee", c:"265-555-2423"},
-                {n:"Criar Buffalo", c:"227-555-0100"},
-                {n:"Criar Comet", c:"227-555-0175"},
-                {n:"Criar Jetmax", c:"938-555-0100"},
-                {n:"Criar NRG-900", c:"625-555-0100"},
-                {n:"Criar Turismo", c:"227-555-0147"},
-                {n:"Criar Super GT", c:"227-555-0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
-                {n:"Criar Sprinter", c:"227-555-0176"}
+                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
+                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
+                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
+                {n:"Mudar Clima", c:"468‑555‑0100"},
+                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
+                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
+                {n:"Criar Annihilator", c:"359‑555‑0100"},
+                {n:"Criar Banshee", c:"265‑555‑2423"},
+                {n:"Criar Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Comet", c:"227‑555‑0175"},
+                {n:"Criar Jetmax", c:"938‑555‑0100"},
+                {n:"Criar NRG‑900", c:"625‑555‑0100"},
+                {n:"Criar Turismo", c:"227‑555‑0147"},
+                {n:"Criar Super GT", c:"227‑555‑0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Sprinter", c:"227‑555‑0176"}
             ],
             'XBOX 360': [
-                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
-                {n:"Remover Nível de Procurado", c:"267-555-0100"},
-                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
-                {n:"Mudar Clima", c:"468-555-0100"},
-                {n:"Pacote de Armas 1", c:"486-555-0100"},
-                {n:"Pacote de Armas 2", c:"486-555-0150"},
-                {n:"Criar Annihilator", c:"359-555-0100"},
-                {n:"Criar Banshee", c:"265-555-2423"},
-                {n:"Criar Buffalo", c:"227-555-0100"},
-                {n:"Criar Comet", c:"227-555-0175"},
-                {n:"Criar Jetmax", c:"938-555-0100"},
-                {n:"Criar NRG-900", c:"625-555-0100"},
-                {n:"Criar Turismo", c:"227-555-0147"},
-                {n:"Criar Super GT", c:"227-555-0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
-                {n:"Criar Sprinter", c:"227-555-0176"}
+                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
+                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
+                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
+                {n:"Mudar Clima", c:"468‑555‑0100"},
+                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
+                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
+                {n:"Criar Annihilator", c:"359‑555‑0100"},
+                {n:"Criar Banshee", c:"265‑555‑2423"},
+                {n:"Criar Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Comet", c:"227‑555‑0175"},
+                {n:"Criar Jetmax", c:"938‑555‑0100"},
+                {n:"Criar NRG‑900", c:"625‑555‑0100"},
+                {n:"Criar Turismo", c:"227‑555‑0147"},
+                {n:"Criar Super GT", c:"227‑555‑0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Sprinter", c:"227‑555‑0176"}
             ],
             'PC': [
-                {n:"Vida, Armadura e Munição", c:"482-555-0100"},
-                {n:"Remover Nível de Procurado", c:"267-555-0100"},
-                {n:"Aumentar Nível de Procurado", c:"267-555-0150"},
-                {n:"Mudar Clima", c:"468-555-0100"},
-                {n:"Pacote de Armas 1", c:"486-555-0100"},
-                {n:"Pacote de Armas 2", c:"486-555-0150"},
-                {n:"Criar Annihilator", c:"359-555-0100"},
-                {n:"Criar Banshee", c:"265-555-2423"},
-                {n:"Criar Buffalo", c:"227-555-0100"},
-                {n:"Criar Comet", c:"227-555-0175"},
-                {n:"Criar Jetmax", c:"938-555-0100"},
-                {n:"Criar NRG-900", c:"625-555-0100"},
-                {n:"Criar Turismo", c:"227-555-0147"},
-                {n:"Criar Super GT", c:"227-555-0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227-555-0100"},
-                {n:"Criar Sprinter", c:"227-555-0176"},
+                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
+                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
+                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
+                {n:"Mudar Clima", c:"468‑555‑0100"},
+                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
+                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
+                {n:"Criar Annihilator", c:"359‑555‑0100"},
+                {n:"Criar Banshee", c:"265‑555‑2423"},
+                {n:"Criar Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Comet", c:"227‑555‑0175"},
+                {n:"Criar Jetmax", c:"938‑555‑0100"},
+                {n:"Criar NRG‑900", c:"625‑555‑0100"},
+                {n:"Criar Turismo", c:"227‑555‑0147"},
+                {n:"Criar Super GT", c:"227‑555‑0168"},
+                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
+                {n:"Criar Sprinter", c:"227‑555‑0176"},
                 {n:"Saúde (Teclado)", c:"GUNSLINGER"},
                 {n:"Armas (Teclado)", c:"WEAPONS"},
                 {n:"Munição (Teclado)", c:"AMMO"}
@@ -262,92 +238,92 @@
         sa: {
             m: ['PS2', 'XBOX 360', 'PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
             'PS2': [
-                {n:"Vida, Colete e $250k", c:"✕ ▲ □ ▼ ▲ ▲ △ ○"},
-                {n:"Armas Profissionais", c:"▲ □ ✕ △ L1 R1 ○ ▼"},
-                {n:"Munição Infinita", c:"L1 R1 □ ▲ ▼ ○ △ ▲"},
-                {n:"Procurado Máximo", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
-                {n:"Tirar Procurado", c:"R1 R1 ○ R2 ▲ □ ▼ ✕"},
-                {n:"Spawn Rhino (Tanque)", c:"○ ○ L1 ○ ○ ○ L1 L2 □ ○ △"},
-                {n:"Spawn Hunter", c:"○ ✕ ▲ ○ ○ △ ✕ ○"},
-                {n:"Spawn Hydra", c:"▲ ✕ △ ▲ ▲ ▲ ✕ ○"},
-                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
-                {n:"Spawn Quad", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Spawn Hotring", c:"R1 ○ R2 △ L1 L1 □ R1 R2"},
-                {n:"Paraquedas", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
-                {n:"Gravidade Baixa", c:"▲ ▼ ▲ ▲ ✕ △ ▲ ✕"},
-                {n:"Câmera Lenta", c:"▲ ▲ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Carros Voadores", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
-                {n:"Trânsito Agressivo", c:"R2 ✕ ▲ L1 L1 ▲ R2"},
-                {n:"Respeito Máximo", c:"L1 R1 △ ○ △ R1 L1 □ R2 R2"},
-                {n:"Sex Appeal Máximo", c:"○ △ ○ △ △ □ ○ △"},
-                {n:"Stamina Máxima", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 □ △"}
+                {n:"Vida, Colete e $250k", c:"X Triângulo Quadrado Baixo Triângulo Triângulo Direita Círculo"},
+                {n:"Armas Profissionais", c:"Triângulo Quadrado X Esquerda L1 R1 Círculo Baixo"},
+                {n:"Munição Infinita", c:"L1 R1 Quadrado Triângulo Baixo Círculo Direita Triângulo"},
+                {n:"Procurado Máximo", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
+                {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
+                {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
+                {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
+                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
+                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
+                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
+                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Carros Voadores", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
+                {n:"Trânsito Agressivo", c:"R2 X Triângulo L1 L1 Triângulo R2"},
+                {n:"Respeito Máximo", c:"L1 R1 Esquerda Círculo Esquerda R1 L1 Quadrado R2 R2"},
+                {n:"Sex Appeal Máximo", c:"Círculo Esquerda Círculo Esquerda Esquerda Quadrado Círculo Esquerda"},
+                {n:"Stamina Máxima", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 Quadrado Esquerda"}
             ],
             'XBOX 360': [
-                {n:"Vida, Colete e $250k", c:"A △ Y B A A Y X B"},
-                {n:"Armas Profissionais", c:"A Y X B LB RB B ▼"},
-                {n:"Munição Infinita", c:"LB RB Y A ▼ B Y A"},
-                {n:"Procurado Máximo", c:"A A Y B A B X A"},
-                {n:"Tirar Procurado", c:"RB RB B RT A Y ▼ X"},
-                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT Y B A"},
-                {n:"Spawn Hunter", c:"B X A B B Y X B"},
-                {n:"Spawn Hydra", c:"A X Y A A A X B"},
-                {n:"Spawn Jetpack", c:"LB LT RB RT A ▼ B Y"},
-                {n:"Spawn Quad", c:"A B X Y A A Y X"},
-                {n:"Spawn Hotring", c:"RB B RT Y LB LB Y RB RT"},
-                {n:"Paraquedas", c:"LB LT RB RT A ▼ B Y"},
-                {n:"Gravidade Baixa", c:"A ▼ A A X Y A X"},
-                {n:"Câmera Lenta", c:"A A X Y A A Y X"},
-                {n:"Carros Voadores", c:"A A Y B A B X A"},
-                {n:"Trânsito Agressivo", c:"RT X A LB LB A RT"},
-                {n:"Respeito Máximo", c:"LB RB Y B Y RB LB Y RT RT"},
-                {n:"Sex Appeal Máximo", c:"B Y B Y Y X B Y"},
-                {n:"Stamina Máxima", c:"A B X Y A A Y X"},
-                {n:"Explosões", c:"RT LT RB RB LT LT Y A"}
+                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
+                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
+                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
+                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
+                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
+                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
+                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
+                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
+                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
+                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
+                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
+                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
+                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
+                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
+                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
+                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
             ],
             'PS4 / PS5': [
-                {n:"Vida, Colete e $250k", c:"✕ ▲ □ ▼ ▲ ▲ △ ○"},
-                {n:"Armas Profissionais", c:"▲ □ ✕ △ L1 R1 ○ ▼"},
-                {n:"Munição Infinita", c:"L1 R1 □ ▲ ▼ ○ △ ▲"},
-                {n:"Procurado Máximo", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
-                {n:"Tirar Procurado", c:"R1 R1 ○ R2 ▲ □ ▼ ✕"},
-                {n:"Spawn Rhino (Tanque)", c:"○ ○ L1 ○ ○ ○ L1 L2 □ ○ △"},
-                {n:"Spawn Hunter", c:"○ ✕ ▲ ○ ○ △ ✕ ○"},
-                {n:"Spawn Hydra", c:"▲ ✕ △ ▲ ▲ ▲ ✕ ○"},
-                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
-                {n:"Spawn Quad", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Spawn Hotring", c:"R1 ○ R2 △ L1 L1 □ R1 R2"},
-                {n:"Paraquedas", c:"L1 L2 R1 R2 ▲ ▼ ○ △"},
-                {n:"Gravidade Baixa", c:"▲ ▼ ▲ ▲ ✕ △ ▲ ✕"},
-                {n:"Câmera Lenta", c:"▲ ▲ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Carros Voadores", c:"▲ ▲ □ △ ▲ ○ ✕ ▲"},
-                {n:"Trânsito Agressivo", c:"R2 ✕ ▲ L1 L1 ▲ R2"},
-                {n:"Respeito Máximo", c:"L1 R1 △ ○ △ R1 L1 □ R2 R2"},
-                {n:"Sex Appeal Máximo", c:"○ △ ○ △ △ □ ○ △"},
-                {n:"Stamina Máxima", c:"▲ ○ ✕ △ ▲ ▲ △ ✕"},
-                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 □ △"}
+                {n:"Vida, Colete e $250k", c:"X Triângulo Quadrado Baixo Triângulo Triângulo Direita Círculo"},
+                {n:"Armas Profissionais", c:"Triângulo Quadrado X Esquerda L1 R1 Círculo Baixo"},
+                {n:"Munição Infinita", c:"L1 R1 Quadrado Triângulo Baixo Círculo Direita Triângulo"},
+                {n:"Procurado Máximo", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
+                {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
+                {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
+                {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
+                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
+                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
+                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
+                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Carros Voadores", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
+                {n:"Trânsito Agressivo", c:"R2 X Triângulo L1 L1 Triângulo R2"},
+                {n:"Respeito Máximo", c:"L1 R1 Esquerda Círculo Esquerda R1 L1 Quadrado R2 R2"},
+                {n:"Sex Appeal Máximo", c:"Círculo Esquerda Círculo Esquerda Esquerda Quadrado Círculo Esquerda"},
+                {n:"Stamina Máxima", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 Quadrado Esquerda"}
             ],
             'CELULAR': [
-                {n:"Vida, Colete e $250k", c:"1-999-662-345"},
-                {n:"Armas Profissionais", c:"1-999-486-426"},
-                {n:"Munição Infinita", c:"1-999-626-426"},
-                {n:"Procurado Máximo", c:"1-999-384-4833"},
-                {n:"Tirar Procurado", c:"1-999-529-5377"},
-                {n:"Spawn Rhino (Tanque)", c:"1-999-868-4663"},
-                {n:"Spawn Hunter", c:"1-999-486-8374"},
-                {n:"Spawn Hydra", c:"1-999-347-6392"},
-                {n:"Spawn Jetpack", c:"1-999-538-7522"},
-                {n:"Spawn Quad", c:"1-999-783-2738"},
-                {n:"Spawn Hotring", c:"1-999-467-8464"},
-                {n:"Paraquedas", c:"1-999-538-7522"},
-                {n:"Gravidade Baixa", c:"1-999-728-4322"},
-                {n:"Câmera Lenta", c:"1-999-756-2666"},
-                {n:"Carros Voadores", c:"1-999-356-2837"},
-                {n:"Trânsito Agressivo", c:"1-999-384-4833"},
-                {n:"Respeito Máximo", c:"1-999-737-8378"},
-                {n:"Sex Appeal Máximo", c:"1-999-739-3255"},
-                {n:"Stamina Máxima", c:"1-999-783-2738"},
-                {n:"Explosões", c:"1-999-486-4263"}
+                {n:"Vida, Colete e $250k", c:"1‑999‑662‑3456"},
+                {n:"Armas Profissionais", c:"1‑999‑486‑4263"},
+                {n:"Munição Infinita", c:"1‑999‑626‑4263"},
+                {n:"Procurado Máximo", c:"1‑999‑384‑4833"},
+                {n:"Tirar Procurado", c:"1‑999‑529‑5377"},
+                {n:"Spawn Rhino (Tanque)", c:"1‑999‑868‑4663"},
+                {n:"Spawn Hunter", c:"1‑999‑486‑8374"},
+                {n:"Spawn Hydra", c:"1‑999‑347‑6392"},
+                {n:"Spawn Jetpack", c:"1‑999‑538‑7522"},
+                {n:"Spawn Quad", c:"1‑999‑783‑2738"},
+                {n:"Spawn Hotring Racer", c:"1‑999‑467‑8464"},
+                {n:"Paraquedas", c:"1‑999‑759‑3255"},
+                {n:"Gravidade Baixa", c:"1‑999‑728‑4322"},
+                {n:"Câmera Lenta", c:"1‑999‑756‑2666"},
+                {n:"Carros Voadores", c:"1‑999‑356‑2837"},
+                {n:"Trânsito Agressivo", c:"1‑999‑384‑4833"},
+                {n:"Respeito Máximo", c:"1‑999‑737‑8378"},
+                {n:"Sex Appeal Máximo", c:"1‑999‑739‑3255"},
+                {n:"Stamina Máxima", c:"1‑999‑783‑2738"},
+                {n:"Explosões", c:"1‑999‑486‑4263"}
             ],
             'PC': [
                 {n:"Vida, Colete e $250k", c:"HESOYAM"},
@@ -360,41 +336,41 @@
                 {n:"Spawn Hydra", c:"JUMPJET"},
                 {n:"Spawn Jetpack", c:"ROCKETMAN"},
                 {n:"Spawn Quad", c:"KGGGDKP"},
-                {n:"Spawn Hotring", c:"VROCKPO"},
-                {n:"Paraquedas", c:"LEAVEMEALONE"},
+                {n:"Spawn Hotring Racer", c:"VROCKPOCAR"},
+                {n:"Paraquedas", c:"AMOMHRER"},
                 {n:"Gravidade Baixa", c:"JCNRUAD"},
                 {n:"Câmera Lenta", c:"SLOWITDOWN"},
                 {n:"Carros Voadores", c:"COMEFLYWITHME"},
                 {n:"Trânsito Agressivo", c:"YLTEICZ"},
                 {n:"Respeito Máximo", c:"WORSHIPME"},
                 {n:"Sex Appeal Máximo", c:"HELLOLADIES"},
-                {n:"Stamina Máximo", c:"CVWKXAM"},
+                {n:"Stamina Máxima", c:"CVWKXAM"},
                 {n:"Explosões", c:"MUNASEF"}
             ],
             'XBOX ONE': [
-                {n:"Vida, Colete e $250k", c:"A △ Y B A A Y X B"},
-                {n:"Armas Profissionais", c:"A Y X B LB RB B ▼"},
-                {n:"Munição Infinita", c:"LB RB Y A ▼ B Y A"},
-                {n:"Procurado Máximo", c:"A A Y B A B X A"},
-                {n:"Tirar Procurado", c:"RB RB B RT A Y ▼ X"},
-                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT Y B A"},
-                {n:"Spawn Hunter", c:"B X A B B Y X B"},
-                {n:"Spawn Hydra", c:"A X Y A A A X B"},
-                {n:"Spawn Jetpack", c:"LB LT RB RT A ▼ B Y"},
-                {n:"Spawn Quad", c:"A B X Y A A Y X"},
-                {n:"Spawn Hotring", c:"RB B RT Y LB LB Y RB RT"},
-                {n:"Paraquedas", c:"LB LT RB RT A ▼ B Y"},
-                {n:"Gravidade Baixa", c:"A ▼ A A X Y A X"},
-                {n:"Câmera Lenta", c:"A A X Y A A Y X"},
-                {n:"Carros Voadores", c:"A A Y B A B X A"},
-                {n:"Trânsito Agressivo", c:"RT X A LB LB A RT"},
-                {n:"Respeito Máximo", c:"LB RB Y B Y RB LB Y RT RT"},
-                {n:"Sex Appeal Máximo", c:"B Y B Y Y X B Y"},
-                {n:"Stamina Máxima", c:"A B X Y A A Y X"},
-                {n:"Explosões", c:"RT LT RB RB LT LT Y A"}
+                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
+                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
+                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
+                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
+                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
+                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
+                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
+                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
+                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
+                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
+                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
+                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
+                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
+                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
+                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
+                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
             ]
         }
-    }
+    };
 
     let currentGame = 'v';
     let currentMode = db[currentGame].m[0];
@@ -432,7 +408,6 @@
     function renderList(filter = '') {
         let html = '';
         let items = db[currentGame][currentMode];
-        
         items.forEach(item => {
             if(!filter || item.n.toLowerCase().includes(filter.toLowerCase())) {
                 html += `
@@ -448,12 +423,9 @@
         document.getElementById('list').innerHTML = html;
     }
 
-    function search(text) {
-        renderList(text);
-    }
+    function search(text) { renderList(text); }
 
     renderGames();
 </script>
-
 </body>
 </html>

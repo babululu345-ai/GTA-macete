@@ -8,12 +8,92 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #000; color: #fff; padding: 20px; max-width: 480px; margin: 0 auto; }
 
-        /* Splash Screen */
+        /* TELA DE LOGIN */
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #0d1117 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; padding: 20px;
+        }
+        #login-screen h1 {
+            font-size: 28px;
+            background: linear-gradient(90deg, #33ccff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900; margin-bottom: 30px; text-align: center;
+        }
+        .login-box {
+            background: #161b22; padding: 30px; border-radius: 20px; width: 100%; max-width: 340px;
+            box-shadow: 0 0 30px rgba(51,204,255,0.15);
+        }
+        .login-box h2 { text-align: center; margin-bottom: 20px; font-size: 20px; }
+        .login-input {
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px; border: none;
+            background: #0d1117; color: #fff; font-size: 16px; outline: none;
+            border: 2px solid transparent;
+        }
+        .login-input:focus { border-color: #33ccff; }
+        .login-btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
+            background: linear-gradient(90deg, #33ccff, #ff00ff);
+            color: #fff; transition: transform 0.2s;
+        }
+        .login-btn:hover { transform: scale(1.02); }
+        .admin-link {
+            text-align: center; margin-top: 20px; color: #666; font-size: 13px;
+            cursor: pointer; text-decoration: underline;
+        }
+        .admin-link:hover { color: #33ccff; }
+        .erro { color: #ff4444; text-align: center; margin-top: 15px; display: none; }
+
+        /* PAINEL DE ADMIN */
+        #admin-panel {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
+            z-index: 9998; padding: 20px; overflow-y: auto; display: none;
+        }
+        .admin-box {
+            max-width: 480px; margin: 0 auto;
+        }
+        .admin-box h2 {
+            text-align: center; margin-bottom: 25px;
+            background: linear-gradient(90deg, #ffcc00, #ff8800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .user-item {
+            background: #161b22; padding: 15px; border-radius: 12px;
+            margin-bottom: 10px; display: flex; justify-content: space-between;
+            align-items: center;
+        }
+        .user-email { font-weight: 500; }
+        .user-status { font-size: 13px; padding: 4px 10px; border-radius: 20px; }
+        .status-pendente { background: #443300; color: #ffcc00; }
+        .status-autorizado { background: #004422; color: #00ff88; }
+        .btn-libera {
+            background: #00aa55; border: none; padding: 8px 12px; border-radius: 8px;
+            color: #fff; cursor: pointer; font-weight: bold; margin-left: 8px;
+        }
+        .btn-remove {
+            background: #aa2222; border: none; padding: 8px 12px; border-radius: 8px;
+            color: #fff; cursor: pointer; font-weight: bold; margin-left: 5px;
+        }
+        .voltar-btn {
+            background: #333; border: none; padding: 12px; border-radius: 10px;
+            color: #fff; width: 100%; margin-top: 20px; cursor: pointer; font-weight: bold;
+        }
+        .novo-usuario {
+            background: #161b22; padding: 20px; border-radius: 12px; margin-bottom: 20px;
+        }
+        .novo-usuario h3 { margin-bottom: 10px; font-size: 15px; color: #aaa; }
+
+        /* SPLASH */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #000 0%, #0d1117 100%);
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.5s ease;
+            z-index: 9997; transition: opacity 0.5s ease; display: none;
         }
         .splash-text { text-align: center; }
         .splash-text h1 {
@@ -32,33 +112,27 @@
         }
         @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
 
-        /* Banner Principal */
+        /* CONTEÚDO PRINCIPAL */
+        #main-content { display: none; }
+
         .banner {
             background: linear-gradient(135deg, #33ccff 0%, #ff00ff 100%);
             padding: 35px 20px; border-radius: 40px; text-align: center; margin-bottom: 35px;
         }
-        .banner h1 {
-            font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 20px;
-        }
-        .banner h1 span { display: inline-block; margin: 0 8px; }
+        .banner h1 { font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 20px; }
         .dates { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .date-row { display: flex; gap: 10px; }
         .date-box {
             background: rgba(0,0,0,0.25); padding: 8px 18px; border-radius: 20px;
             font-size: 14px; font-weight: 600;
         }
-
-        /* Rótulos */
         .label {
             font-size: 18px; color: #33ccff; font-weight: bold;
             margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 1px;
         }
-
-        /* Botões - IGUAL À FOTO */
         .grid-game { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 10px; }
         .grid-platform { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .grid-platform .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
-
         .btn {
             padding: 18px 10px; border-radius: 16px; border: none;
             font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase;
@@ -68,15 +142,11 @@
             background: linear-gradient(90deg, #33ccff, #ff00ff);
             color: #fff; box-shadow: 0 0 15px rgba(51,204,255,0.4);
         }
-
-        /* Pesquisa */
         .search {
             width: 100%; padding: 18px 20px; background: #1a1a1f; border: none;
             border-radius: 16px; color: #fff; margin: 25px 0; font-size: 16px; outline: none;
         }
         .search::placeholder { color: #666; }
-
-        /* Cartões */
         .card {
             background: #121217; padding: 25px; border-radius: 20px; margin-bottom: 15px;
             border-left: 4px solid #33ccff;
@@ -87,17 +157,59 @@
             color: #33ccff; font-family: monospace; font-size: 20px;
             line-height: 1.8; display: block;
         }
+        .sair-btn {
+            background: #222; border: none; padding: 10px 15px; border-radius: 10px;
+            color: #888; cursor: pointer; margin-bottom: 20px; width: 100%;
+        }
+        .sair-btn:hover { color: #fff; background: #333; }
     </style>
 </head>
 <body>
 
-    <div id="splash">
-        <div class="splash-text">
-            <h1>GTA MACETE PREMIUM</h1>
-            <div class="loader"></div>
-        </div>
+<!-- TELA DE LOGIN -->
+<div id="login-screen">
+    <h1>🔐 GTA MACETE PREMIUM</h1>
+    <div class="login-box">
+        <h2>Acesso ao Sistema</h2>
+        <input type="email" id="email-input" class="login-input" placeholder="Seu e-mail">
+        <input type="password" id="senha-input" class="login-input" placeholder="Sua senha">
+        <button class="login-btn" onclick="fazerLogin()">ENTRAR</button>
+        <div class="erro" id="msg-erro">E-mail não autorizado ou senha incorreta!</div>
+        <div class="admin-link" onclick="mostrarAdmin()">Painel do Desenvolvedor</div>
     </div>
+</div>
 
+<!-- PAINEL DE ADMIN - SÓ VOCÊ TEM ACESSO -->
+<div id="admin-panel">
+    <div class="admin-box">
+        <h2>⚙️ PAINEL DO DESENVOLVEDOR</h2>
+        
+        <div class="novo-usuario">
+            <h3>Adicionar usuário para liberar acesso</h3>
+            <input type="email" id="novo-email" class="login-input" placeholder="E-mail do usuário">
+            <input type="password" id="nova-senha" class="login-input" placeholder="Criar senha para ele">
+            <button class="login-btn" style="margin-top:5px;" onclick="adicionarUsuario()">LIBERAR ACESSO</button>
+        </div>
+
+        <h3 style="margin-bottom:10px;">Usuários Cadastrados</h3>
+        <div id="lista-usuarios"></div>
+
+        <button class="voltar-btn" onclick="sairAdmin()">← Voltar</button>
+    </div>
+</div>
+
+<!-- SPLASH -->
+<div id="splash">
+    <div class="splash-text">
+        <h1>GTA MACETE PREMIUM</h1>
+        <div class="loader"></div>
+    </div>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div id="main-content">
+    <button class="sair-btn" onclick="sairDoSistema()">🚪 Sair da conta</button>
+    
     <div class="banner">
         <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
         <div class="dates">
@@ -119,17 +231,152 @@
     </div>
 
     <input type="text" class="search" placeholder="Pesquisar macete..." onkeyup="search(this.value)">
-
     <div id="list"></div>
+</div>
 
 <script>
-    window.onload = function() {
+    // ================= CONFIGURAÇÃO =================
+    // SEU E-MAIL E SENHA DE DESENVOLVEDOR - ALTERE AQUI!
+    const DEV_EMAIL = "seuemail@aqui.com";       // COLOQUE SEU E-MAIL
+    const DEV_SENHA = "suaSenhaSecreta123";       // COLOQUE SUA SENHA
+    // =================================================
+
+    // Inicializar banco de dados local
+    if (!localStorage.getItem('usuarios')) {
+        const usuariosIniciais = [
+            { email: DEV_EMAIL, senha: DEV_SENHA, autorizado: true, dev: true }
+        ];
+        localStorage.setItem('usuarios', JSON.stringify(usuariosIniciais));
+    }
+
+    function getUsuarios() {
+        return JSON.parse(localStorage.getItem('usuarios'));
+    }
+    function salvarUsuarios(lista) {
+        localStorage.setItem('usuarios', JSON.stringify(lista));
+    }
+
+    // Tela de login
+    function fazerLogin() {
+        const email = document.getElementById('email-input').value.trim();
+        const senha = document.getElementById('senha-input').value;
+        const usuarios = getUsuarios();
+        const user = usuarios.find(u => u.email === email && u.senha === senha);
+
+        if (user && user.autorizado) {
+            localStorage.setItem('usuarioAtual', JSON.stringify(user));
+            entrarSistema();
+        } else {
+            document.getElementById('msg-erro').style.display = 'block';
+        }
+    }
+
+    // Painel do desenvolvedor
+    function mostrarAdmin() {
+        const email = prompt("Digite seu e-mail de desenvolvedor:");
+        const senha = prompt("Digite sua senha:");
+        
+        if (email === DEV_EMAIL && senha === DEV_SENHA) {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            atualizarListaUsuarios();
+        } else {
+            alert("Sem permissão! Apenas o desenvolvedor pode acessar.");
+        }
+    }
+
+    function sairAdmin() {
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+    }
+
+    function adicionarUsuario() {
+        const email = document.getElementById('novo-email').value.trim();
+        const senha = document.getElementById('nova-senha').value;
+        
+        if (!email || !senha) { alert("Preencha tudo!"); return; }
+        
+        let usuarios = getUsuarios();
+        if (usuarios.find(u => u.email === email)) {
+            alert("Esse e-mail já está cadastrado!");
+            return;
+        }
+        
+        usuarios.push({ email, senha, autorizado: true, dev: false });
+        salvarUsuarios(usuarios);
+        alert("✅ Acesso liberado para: " + email);
+        document.getElementById('novo-email').value = '';
+        document.getElementById('nova-senha').value = '';
+        atualizarListaUsuarios();
+    }
+
+    function atualizarListaUsuarios() {
+        const lista = getUsuarios();
+        let html = '';
+        lista.forEach((u, i) => {
+            html += `
+            <div class="user-item">
+                <div>
+                    <div class="user-email">${u.email}</div>
+                    <span class="user-status ${u.autorizado ? 'status-autorizado' : 'status-pendente'}">
+                        ${u.autorizado ? '✅ Autorizado' : '⏳ Pendente'}
+                        ${u.dev ? '👑 DESENVOLVEDOR' : ''}
+                    </span>
+                </div>
+                <div>
+                    ${!u.dev ? `<button class="btn-libera" onclick="toggleAutorizar(${i})">${u.autorizado ? 'Bloquear' : 'Liberar'}</button>` : ''}
+                    ${!u.dev ? `<button class="btn-remove" onclick="removerUsuario(${i})">✕</button>` : ''}
+                </div>
+            </div>`;
+        });
+        document.getElementById('lista-usuarios').innerHTML = html || '<p style="color:#666;text-align:center;">Nenhum usuário</p>';
+    }
+
+    function toggleAutorizar(indice) {
+        let lista = getUsuarios();
+        lista[indice].autorizado = !lista[indice].autorizado;
+        salvarUsuarios(lista);
+        atualizarListaUsuarios();
+    }
+
+    function removerUsuario(indice) {
+        if (!confirm("Tem certeza?")) return;
+        let lista = getUsuarios();
+        lista.splice(indice, 1);
+        salvarUsuarios(lista);
+        atualizarListaUsuarios();
+    }
+
+    // Entrar no sistema
+    function entrarSistema() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('splash').style.display = 'flex';
         setTimeout(() => {
             document.getElementById('splash').style.opacity = '0';
-            setTimeout(() => document.getElementById('splash').style.display = 'none', 500);
+            setTimeout(() => {
+                document.getElementById('splash').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                renderGames();
+            }, 500);
         }, 1500);
+    }
+
+    function sairDoSistema() {
+        localStorage.removeItem('usuarioAtual');
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('email-input').value = '';
+        document.getElementById('senha-input').value = '';
+        document.getElementById('msg-erro').style.display = 'none';
+    }
+
+    // Verificar se já está logado
+    window.onload = function() {
+        const logado = localStorage.getItem('usuarioAtual');
+        if (logado) entrarSistema();
     };
 
+    // ========== TODO O BANCO DE MACETES ORIGINAL ==========
     const db = {
         v: {
             m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE', 'XBOX 360'],
@@ -189,15 +436,15 @@
                 {n:"Paraquedas", c:"1-999-759-3255"},
                 {n:"Cair do céu", c:"1-999-758-2436"},
                 {n:"Ataques explosivos", c:"1-999-484-4958"},
-                {n:"Spawn Buzzard (Helicóptero)", c:"1-999-289-9633"},
-                {n:"Spawn Comet (Carro)", c:"1-999-266-3878"},
-                {n:"Spawn PCJ‑600 (Moto)", c:"1-999-226-3489"},
-                {n:"Spawn Sanchez (Moto)", c:"1-999-633-2462"},
-                {n:"Spawn BMX (Bicicleta)", c:"1-999-245-7893"},
+                {n:"Spawn Buzzard", c:"1-999-289-9633"},
+                {n:"Spawn Comet", c:"1-999-266-3878"},
+                {n:"Spawn PCJ‑600", c:"1-999-226-3489"},
+                {n:"Spawn Sanchez", c:"1-999-633-2462"},
+                {n:"Spawn BMX", c:"1-999-245-7893"},
                 {n:"Spawn Rapid GT", c:"1-999-727-4348"},
                 {n:"Spawn Limousine", c:"1-999-845-2436"},
-                {n:"Spawn Duster (Avião)", c:"1-999-359-8247"},
-                {n:"Spawn Jetmax (Barco)", c:"1-999-587-2349"},
+                {n:"Spawn Duster", c:"1-999-359-8247"},
+                {n:"Spawn Jetmax", c:"1-999-587-2349"},
                 {n:"Spawn Cargobob", c:"1-999-228-5678"},
                 {n:"Spawn Turismo R", c:"1-999-444-8278"}
             ],
@@ -397,146 +644,4 @@
                 {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
                 {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
                 {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
-                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
-                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
-                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
-                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Carros Voadores", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
-                {n:"Trânsito Agressivo", c:"R2 X Triângulo L1 L1 Triângulo R2"},
-                {n:"Respeito Máximo", c:"L1 R1 Esquerda Círculo Esquerda R1 L1 Quadrado R2 R2"},
-                {n:"Sex Appeal Máximo", c:"Círculo Esquerda Círculo Esquerda Esquerda Quadrado Círculo Esquerda"},
-                {n:"Stamina Máxima", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 Quadrado Esquerda"}
-            ],
-            'CELULAR': [
-                {n:"Vida, Colete e $250k", c:"1‑999‑662‑3456"},
-                {n:"Armas Profissionais", c:"1‑999‑486‑4263"},
-                {n:"Munição Infinita", c:"1‑999‑626‑4263"},
-                {n:"Procurado Máximo", c:"1‑999‑384‑4833"},
-                {n:"Tirar Procurado", c:"1‑999‑529‑5377"},
-                {n:"Spawn Rhino (Tanque)", c:"1‑999‑868‑4663"},
-                {n:"Spawn Hunter", c:"1‑999‑486‑8374"},
-                {n:"Spawn Hydra", c:"1‑999‑347‑6392"},
-                {n:"Spawn Jetpack", c:"1‑999‑538‑7522"},
-                {n:"Spawn Quad", c:"1‑999‑783‑2738"},
-                {n:"Spawn Hotring Racer", c:"1‑999‑467‑8464"},
-                {n:"Paraquedas", c:"1‑999‑759‑3255"},
-                {n:"Gravidade Baixa", c:"1‑999‑728‑4322"},
-                {n:"Câmera Lenta", c:"1‑999‑756‑2666"},
-                {n:"Carros Voadores", c:"1‑999‑356‑2837"},
-                {n:"Trânsito Agressivo", c:"1‑999‑384‑4833"},
-                {n:"Respeito Máximo", c:"1‑999‑737‑8378"},
-                {n:"Sex Appeal Máximo", c:"1‑999‑739‑3255"},
-                {n:"Stamina Máxima", c:"1‑999‑783‑2738"},
-                {n:"Explosões", c:"1‑999‑486‑4263"}
-            ],
-            'PC': [
-                {n:"Vida, Colete e $250k", c:"HESOYAM"},
-                {n:"Armas Profissionais", c:"PROFESSIONALSKIT"},
-                {n:"Munição Infinita", c:"FULLCLIP"},
-                {n:"Procurado Máximo", c:"BRINGITON"},
-                {n:"Tirar Procurado", c:"AEZAKMI"},
-                {n:"Spawn Rhino (Tanque)", c:"PANZER"},
-                {n:"Spawn Hunter", c:"ONSOON"},
-                {n:"Spawn Hydra", c:"JUMPJET"},
-                {n:"Spawn Jetpack", c:"ROCKETMAN"},
-                {n:"Spawn Quad", c:"KGGGDKP"},
-                {n:"Spawn Hotring Racer", c:"VROCKPOCAR"},
-                {n:"Paraquedas", c:"AMOMHRER"},
-                {n:"Gravidade Baixa", c:"JCNRUAD"},
-                {n:"Câmera Lenta", c:"SLOWITDOWN"},
-                {n:"Carros Voadores", c:"COMEFLYWITHME"},
-                {n:"Trânsito Agressivo", c:"YLTEICZ"},
-                {n:"Respeito Máximo", c:"WORSHIPME"},
-                {n:"Sex Appeal Máximo", c:"HELLOLADIES"},
-                {n:"Stamina Máxima", c:"CVWKXAM"},
-                {n:"Explosões", c:"MUNASEF"}
-            ],
-            'XBOX ONE': [
-                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
-                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
-                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
-                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
-                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
-                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
-                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
-                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
-                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
-                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
-                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
-                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
-                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
-                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
-                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
-                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
-            ]
-        }
-    };
-
-    let currentGame = 'v';
-    let currentMode = 'PS4 / PS5';
-
-    function renderGames() {
-        let html = '';
-        let games = [{id:'v', name:'GTA V'}, {id:'iv', name:'GTA IV'}, {id:'sa', name:'GTA SA'}];
-        games.forEach(g => {
-            html += `<button class="btn ${g.id === currentGame ? 'active' : ''}" onclick="setGame('${g.id}')">${g.name}</button>`;
-        });
-        document.getElementById('games').innerHTML = html;
-        renderPlatforms();
-    }
-
-    function setGame(id) {
-        currentGame = id;
-        currentMode = db[currentGame].m[0];
-        renderGames();
-    }
-
-    function renderPlatforms() {
-        let row1 = '';
-        let row2 = '';
-        db[currentGame].row1.forEach(p => {
-            row1 += `<button class="btn ${p === currentMode ? 'active' : ''}" onclick="setMode('${p}')">${p}</button>`;
-        });
-        db[currentGame].row2.forEach(p => {
-            row2 += `<button class="btn ${p === currentMode ? 'active' : ''}" onclick="setMode('${p}')">${p}</button>`;
-        });
-        document.getElementById('platform-row1').innerHTML = row1;
-        document.getElementById('platform-row2').innerHTML = row2;
-        renderList();
-    }
-
-    function setMode(m) {
-        currentMode = m;
-        renderPlatforms();
-    }
-
-    function renderList(filter = '') {
-        let html = '';
-        let items = db[currentGame][currentMode];
-        items.forEach(item => {
-            if(!filter || item.n.toLowerCase().includes(filter.toLowerCase())) {
-                html += `
-                <div class="card">
-                    <span class="c-name">${item.n}</span>
-                    <span class="c-code">${item.c}</span>
-                </div>
-                `;
-            }
-        });
-        document.getElementById('list').innerHTML = html;
-    }
-
-    function search(text) { renderList(text); }
-
-    renderGames();
-</script>
-</body>
-</html>
+                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triâng

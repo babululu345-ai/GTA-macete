@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GTA MACETE PREMIUM</title>
     <style>
+        :root { --neon: #00d4ff; --pink: #ff00ff; --bg: #0d1117; --card-bg: #161b22; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #000; color: #fff; padding: 20px; max-width: 480px; margin: 0 auto; }
+        body { background: var(--bg); color: #fff; padding: 15px; max-width: 480px; margin: 0 auto; }
 
         /* TELA DE LOGIN */
         #login-screen {
@@ -41,11 +42,33 @@
         }
         .login-btn:hover { transform: scale(1.02); }
         .admin-link {
-            text-align: center; margin-top: 20px; color: #666; font-size: 13px;
-            cursor: pointer; text-decoration: underline;
+            text-align: center; margin-top: 20px; color: #666; font-size: 14px;
+            cursor: pointer; text-decoration: underline; display: block;
         }
         .admin-link:hover { color: #33ccff; }
         .erro { color: #ff4444; text-align: center; margin-top: 15px; display: none; }
+
+        /* TELA DE ACESSO DEV */
+        #dev-login {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; padding: 20px;
+        }
+        .dev-box {
+            background: #161b22; padding: 30px; border-radius: 20px; width: 100%; max-width: 340px;
+            box-shadow: 0 0 30px rgba(255,204,0,0.2);
+        }
+        .dev-box h2 {
+            text-align: center; margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffcc00, #ff8800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .voltar-pequeno {
+            background: #333; border: none; padding: 10px; border-radius: 8px;
+            color: #fff; width: 100%; margin-top: 10px; cursor: pointer;
+        }
 
         /* PAINEL DE ADMIN */
         #admin-panel {
@@ -53,9 +76,7 @@
             background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
             z-index: 9998; padding: 20px; overflow-y: auto; display: none;
         }
-        .admin-box {
-            max-width: 480px; margin: 0 auto;
-        }
+        .admin-box { max-width: 480px; margin: 0 auto; }
         .admin-box h2 {
             text-align: center; margin-bottom: 25px;
             background: linear-gradient(90deg, #ffcc00, #ff8800);
@@ -65,19 +86,19 @@
         .user-item {
             background: #161b22; padding: 15px; border-radius: 12px;
             margin-bottom: 10px; display: flex; justify-content: space-between;
-            align-items: center;
+            align-items: center; flex-wrap: wrap; gap: 8px;
         }
-        .user-email { font-weight: 500; }
-        .user-status { font-size: 13px; padding: 4px 10px; border-radius: 20px; }
+        .user-email { font-weight: 500; font-size: 14px; }
+        .user-status { font-size: 12px; padding: 4px 10px; border-radius: 20px; }
         .status-pendente { background: #443300; color: #ffcc00; }
         .status-autorizado { background: #004422; color: #00ff88; }
         .btn-libera {
-            background: #00aa55; border: none; padding: 8px 12px; border-radius: 8px;
-            color: #fff; cursor: pointer; font-weight: bold; margin-left: 8px;
+            background: #00aa55; border: none; padding: 8px 10px; border-radius: 8px;
+            color: #fff; cursor: pointer; font-weight: bold; font-size: 13px;
         }
         .btn-remove {
-            background: #aa2222; border: none; padding: 8px 12px; border-radius: 8px;
-            color: #fff; cursor: pointer; font-weight: bold; margin-left: 5px;
+            background: #aa2222; border: none; padding: 8px 10px; border-radius: 8px;
+            color: #fff; cursor: pointer; font-weight: bold; font-size: 13px;
         }
         .voltar-btn {
             background: #333; border: none; padding: 12px; border-radius: 10px;
@@ -92,8 +113,8 @@
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #000 0%, #0d1117 100%);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9997; transition: opacity 0.5s ease; display: none;
+            display: none; justify-content: center; align-items: center;
+            z-index: 9997; transition: opacity 0.5s ease;
         }
         .splash-text { text-align: center; }
         .splash-text h1 {
@@ -121,7 +142,7 @@
         }
         .banner h1 { font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 20px; }
         .dates { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .date-row { display: flex; gap: 10px; }
+        .date-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         .date-box {
             background: rgba(0,0,0,0.25); padding: 8px 18px; border-radius: 20px;
             font-size: 14px; font-weight: 600;
@@ -135,7 +156,7 @@
         .grid-platform .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
         .btn {
             padding: 18px 10px; border-radius: 16px; border: none;
-            font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            font-size: 14px; font-weight: bold; cursor: pointer; text-transform: uppercase;
             background: #1a1f2e; color: #8b949e; transition: all 0.3s ease;
         }
         .btn.active {
@@ -151,10 +172,10 @@
             background: #121217; padding: 25px; border-radius: 20px; margin-bottom: 15px;
             border-left: 4px solid #33ccff;
         }
-        .c-name { font-weight: bold; font-size: 22px; margin-bottom: 15px; display: block; }
+        .c-name { font-weight: bold; font-size: 20px; margin-bottom: 15px; display: block; }
         .c-code {
             background: #000; padding: 20px; border-radius: 12px;
-            color: #33ccff; font-family: monospace; font-size: 20px;
+            color: #33ccff; font-family: monospace; font-size: 16px;
             line-height: 1.8; display: block;
         }
         .sair-btn {
@@ -166,7 +187,7 @@
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
+<!-- TELA DE LOGIN PRINCIPAL -->
 <div id="login-screen">
     <h1>🔐 GTA MACETE PREMIUM</h1>
     <div class="login-box">
@@ -175,11 +196,23 @@
         <input type="password" id="senha-input" class="login-input" placeholder="Sua senha">
         <button class="login-btn" onclick="fazerLogin()">ENTRAR</button>
         <div class="erro" id="msg-erro">E-mail não autorizado ou senha incorreta!</div>
-        <div class="admin-link" onclick="mostrarAdmin()">Painel do Desenvolvedor</div>
+        <span class="admin-link" onclick="mostrarDevLogin()">⚙️ Painel do Desenvolvedor</span>
     </div>
 </div>
 
-<!-- PAINEL DE ADMIN - SÓ VOCÊ TEM ACESSO -->
+<!-- TELA DE LOGIN DO DESENVOLVEDOR (CORRIGIDO) -->
+<div id="dev-login">
+    <div class="dev-box">
+        <h2>🔑 ACESSO DO DESENVOLVEDOR</h2>
+        <input type="email" id="dev-email" class="login-input" placeholder="Seu e-mail de desenvolvedor">
+        <input type="password" id="dev-senha" class="login-input" placeholder="Sua senha de desenvolvedor">
+        <button class="login-btn" onclick="verificarDev()">ENTRAR NO PAINEL</button>
+        <div class="erro" id="dev-erro">Sem permissão! Apenas o desenvolvedor.</div>
+        <button class="voltar-pequeno" onclick="voltarLogin()">← Voltar</button>
+    </div>
+</div>
+
+<!-- PAINEL DE ADMIN -->
 <div id="admin-panel">
     <div class="admin-box">
         <h2>⚙️ PAINEL DO DESENVOLVEDOR</h2>
@@ -215,7 +248,7 @@
         <div class="dates">
             <div class="date-box">📅 LANÇAMENTO: 03/05/2026</div>
             <div class="date-row">
-                <div class="date-box">🔄 ATUALIZADO: 28/07/2026</div>
+                <div class="date-box">🔄 ATUALIZADO: 04/10/2026</div>
                 <div class="date-box">✅ TUDO ESCRITO</div>
             </div>
         </div>
@@ -236,12 +269,12 @@
 
 <script>
     // ================= CONFIGURAÇÃO =================
-    // SEU E-MAIL E SENHA DE DESENVOLVEDOR - ALTERE AQUI!
-    const DEV_EMAIL = "seuemail@aqui.com";       // COLOQUE SEU E-MAIL
-    const DEV_SENHA = "suaSenhaSecreta123";       // COLOQUE SUA SENHA
+    // COLOQUE SEUS DADOS AQUI!
+    const DEV_EMAIL = "dev@gta-premium.com";       // SEU E-MAIL
+    const DEV_SENHA = "12345678";                  // SUA SENHA
     // =================================================
 
-    // Inicializar banco de dados local
+    // Inicializar banco de dados
     if (!localStorage.getItem('usuarios')) {
         const usuariosIniciais = [
             { email: DEV_EMAIL, senha: DEV_SENHA, autorizado: true, dev: true }
@@ -249,14 +282,10 @@
         localStorage.setItem('usuarios', JSON.stringify(usuariosIniciais));
     }
 
-    function getUsuarios() {
-        return JSON.parse(localStorage.getItem('usuarios'));
-    }
-    function salvarUsuarios(lista) {
-        localStorage.setItem('usuarios', JSON.stringify(lista));
-    }
+    function getUsuarios() { return JSON.parse(localStorage.getItem('usuarios')); }
+    function salvarUsuarios(lista) { localStorage.setItem('usuarios', JSON.stringify(lista)); }
 
-    // Tela de login
+    // Tela de login principal
     function fazerLogin() {
         const email = document.getElementById('email-input').value.trim();
         const senha = document.getElementById('senha-input').value;
@@ -271,23 +300,37 @@
         }
     }
 
-    // Painel do desenvolvedor
-    function mostrarAdmin() {
-        const email = prompt("Digite seu e-mail de desenvolvedor:");
-        const senha = prompt("Digite sua senha:");
+    // === TELA DE DEV CORRIGIDA ===
+    function mostrarDevLogin() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dev-login').style.display = 'flex';
+        document.getElementById('dev-erro').style.display = 'none';
+        document.getElementById('dev-email').value = '';
+        document.getElementById('dev-senha').value = '';
+    }
+
+    function voltarLogin() {
+        document.getElementById('dev-login').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+    }
+
+    function verificarDev() {
+        const email = document.getElementById('dev-email').value.trim();
+        const senha = document.getElementById('dev-senha').value;
         
         if (email === DEV_EMAIL && senha === DEV_SENHA) {
-            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dev-login').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
             atualizarListaUsuarios();
         } else {
-            alert("Sem permissão! Apenas o desenvolvedor pode acessar.");
+            document.getElementById('dev-erro').style.display = 'block';
         }
     }
 
     function sairAdmin() {
         document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'flex';
+        voltarLogin();
     }
 
     function adicionarUsuario() {
@@ -376,9 +419,10 @@
         if (logado) entrarSistema();
     };
 
-    // ========== TODO O BANCO DE MACETES ORIGINAL ==========
+    // ========== BANCO DE MACETES ==========
     const db = {
         v: {
+            nome: "GTA V",
             m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE', 'XBOX 360'],
             row1: ['PS4 / PS5', 'CELULAR', 'PC'],
             row2: ['XBOX ONE', 'XBOX 360'],
@@ -529,66 +573,8 @@
                 {n:"Avião Duster", c:"Direita Esquerda RB RB RB Esquerda Y Y A B LB LB"}
             ]
         },
-        iv: {
-            m: ['PS3', 'XBOX 360', 'PC'],
-            row1: ['PS3', 'XBOX 360', 'PC'],
-            row2: [],
-            'PS3': [
-                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
-                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
-                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
-                {n:"Mudar Clima", c:"468‑555‑0100"},
-                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
-                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
-                {n:"Criar Annihilator", c:"359‑555‑0100"},
-                {n:"Criar Banshee", c:"265‑555‑2423"},
-                {n:"Criar Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Comet", c:"227‑555‑0175"},
-                {n:"Criar Jetmax", c:"938‑555‑0100"},
-                {n:"Criar NRG‑900", c:"625‑555‑0100"},
-                {n:"Criar Turismo", c:"227‑555‑0147"},
-                {n:"Criar Super GT", c:"227‑555‑0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Sprinter", c:"227‑555‑0176"}
-            ],
-            'XBOX 360': [
-                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
-                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
-                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
-                {n:"Mudar Clima", c:"468‑555‑0100"},
-                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
-                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
-                {n:"Criar Annihilator", c:"359‑555‑0100"},
-                {n:"Criar Banshee", c:"265‑555‑2423"},
-                {n:"Criar Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Comet", c:"227‑555‑0175"},
-                {n:"Criar Jetmax", c:"938‑555‑0100"},
-                {n:"Criar NRG‑900", c:"625‑555‑0100"},
-                {n:"Criar Turismo", c:"227‑555‑0147"},
-                {n:"Criar Super GT", c:"227‑555‑0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Sprinter", c:"227‑555‑0176"}
-            ],
-            'PC': [
-                {n:"Vida, Armadura e Munição", c:"482‑555‑0100"},
-                {n:"Remover Nível de Procurado", c:"267‑555‑0100"},
-                {n:"Aumentar Nível de Procurado", c:"267‑555‑0150"},
-                {n:"Mudar Clima", c:"468‑555‑0100"},
-                {n:"Pacote de Armas 1", c:"486‑555‑0100"},
-                {n:"Pacote de Armas 2", c:"486‑555‑0150"},
-                {n:"Criar Annihilator", c:"359‑555‑0100"},
-                {n:"Criar Banshee", c:"265‑555‑2423"},
-                {n:"Criar Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Comet", c:"227‑555‑0175"},
-                {n:"Criar Jetmax", c:"938‑555‑0100"},
-                {n:"Criar NRG‑900", c:"625‑555‑0100"},
-                {n:"Criar Turismo", c:"227‑555‑0147"},
-                {n:"Criar Super GT", c:"227‑555‑0168"},
-                {n:"Criar F.B.I. Buffalo", c:"227‑555‑0100"},
-                {n:"Criar Sprinter", c:"227‑555‑0176"}
-            ]
-        },
         sa: {
+            nome: "GTA San Andreas",
             m: ['PS2', 'XBOX', 'PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
             row1: ['PS2', 'XBOX', 'PS4 / PS5'],
             row2: ['CELULAR', 'PC', 'XBOX ONE'],
@@ -613,6 +599,28 @@
                 {n:"Sex Appeal Máximo", c:"Círculo Esquerda Círculo Esquerda Esquerda Quadrado Círculo Esquerda"},
                 {n:"Stamina Máxima", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
                 {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 Quadrado Esquerda"}
+            ],
+            'XBOX ONE': [
+                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
+                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
+                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
+                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
+                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
+                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
+                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
+                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
+                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
+                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
+                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
+                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
+                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
+                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
+                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
+                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
+                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
+                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
             ],
             'XBOX 360': [
                 {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
@@ -644,4 +652,10 @@
                 {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
                 {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
                 {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
-                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triâng
+                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
+                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
+                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
+                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
+                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
+                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Tri

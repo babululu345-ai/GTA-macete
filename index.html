@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GTA MACETE PREMIUM</title>
     <style>
-        :root { --neon: #00d4ff; --pink: #ff00ff; --bg: #0d1117; --card-bg: #161b22; }
+        :root { --neon: #00d4ff; --pink: #ff00ff; --gold: #ffcc00; --sucesso: #00cc66; --alerta: #ff9900; --perigo: #ff3333; --bg: #0d1117; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--bg); color: #fff; padding: 15px; max-width: 480px; margin: 0 auto; }
 
@@ -17,60 +17,35 @@
             z-index: 9999; padding: 20px;
         }
         #login-screen h1 {
-            font-size: 28px;
+            font-size: 26px; text-align: center; margin-bottom: 25px;
             background: linear-gradient(90deg, #33ccff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900; margin-bottom: 30px; text-align: center;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .login-box {
-            background: #161b22; padding: 30px; border-radius: 20px; width: 100%; max-width: 340px;
-            box-shadow: 0 0 30px rgba(51,204,255,0.15);
+            background: #161b22; padding: 25px; border-radius: 20px; width: 100%; max-width: 340px;
+            box-shadow: 0 0 25px rgba(51,204,255,0.15);
         }
-        .login-box h2 { text-align: center; margin-bottom: 20px; font-size: 20px; }
         .login-input {
-            width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px; border: none;
+            width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; border: none;
             background: #0d1117; color: #fff; font-size: 16px; outline: none;
             border: 2px solid transparent;
         }
         .login-input:focus { border-color: #33ccff; }
-        .login-btn {
-            width: 100%; padding: 15px; border-radius: 12px; border: none;
-            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
-            background: linear-gradient(90deg, #33ccff, #ff00ff);
-            color: #fff; transition: transform 0.2s;
+        .btn {
+            width: 100%; padding: 14px; border-radius: 12px; border: none;
+            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 8px;
         }
-        .login-btn:hover { transform: scale(1.02); }
-        .admin-link {
-            text-align: center; margin-top: 20px; color: #666; font-size: 14px;
-            cursor: pointer; text-decoration: underline; display: block;
+        .btn-dev {
+            background: linear-gradient(90deg, #ffcc00, #ff8800); color: #000;
+            margin-top: 15px;
         }
-        .admin-link:hover { color: #33ccff; }
-        .erro { color: #ff4444; text-align: center; margin-top: 15px; display: none; }
+        .btn-user {
+            background: linear-gradient(90deg, #33ccff, #ff00ff); color: #fff;
+        }
+        .erro { color: var(--perigo); text-align: center; margin-top: 12px; display: none; }
+        .aviso-pendente { color: var(--alerta); display: none; }
 
-        /* TELA DE ACESSO DEV */
-        #dev-login {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; padding: 20px;
-        }
-        .dev-box {
-            background: #161b22; padding: 30px; border-radius: 20px; width: 100%; max-width: 340px;
-            box-shadow: 0 0 30px rgba(255,204,0,0.2);
-        }
-        .dev-box h2 {
-            text-align: center; margin-bottom: 20px;
-            background: linear-gradient(90deg, #ffcc00, #ff8800);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .voltar-pequeno {
-            background: #333; border: none; padding: 10px; border-radius: 8px;
-            color: #fff; width: 100%; margin-top: 10px; cursor: pointer;
-        }
-
-        /* PAINEL DE ADMIN */
+        /* PAINEL DO DESENVOLVEDOR */
         #admin-panel {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #050505 0%, #1a1a2e 100%);
@@ -78,179 +53,162 @@
         }
         .admin-box { max-width: 480px; margin: 0 auto; }
         .admin-box h2 {
-            text-align: center; margin-bottom: 25px;
+            text-align: center; margin-bottom: 20px;
             background: linear-gradient(90deg, #ffcc00, #ff8800);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+        .novo-usuario {
+            background: #161b22; padding: 20px; border-radius: 12px; margin-bottom: 20px;
+        }
+        .novo-usuario h3 { margin-bottom: 10px; font-size: 15px; color: #aaa; }
         .user-item {
-            background: #161b22; padding: 15px; border-radius: 12px;
+            background: #161b22; padding: 14px; border-radius: 12px;
             margin-bottom: 10px; display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 8px;
         }
         .user-email { font-weight: 500; font-size: 14px; }
-        .user-status { font-size: 12px; padding: 4px 10px; border-radius: 20px; }
-        .status-pendente { background: #443300; color: #ffcc00; }
-        .status-autorizado { background: #004422; color: #00ff88; }
+        .user-status { font-size: 12px; padding: 4px 10px; border-radius: 20px; margin-top: 4px; display: inline-block; }
+        .status-autorizado { background: #003322; color: #00ff88; }
+        .status-pendente { background: #332b00; color: #ffcc00; }
+        .status-expirado { background: #330000; color: #ff6666; }
+        .data-validade { font-size: 11px; color: #888; margin-top: 4px; }
         .btn-libera {
-            background: #00aa55; border: none; padding: 8px 10px; border-radius: 8px;
+            background: var(--sucesso); border: none; padding: 7px 10px; border-radius: 8px;
             color: #fff; cursor: pointer; font-weight: bold; font-size: 13px;
         }
+        .btn-bloqueia {
+            background: var(--alerta); border: none; padding: 7px 10px; border-radius: 8px;
+            color: #000; cursor: pointer; font-weight: bold; font-size: 13px;
+        }
         .btn-remove {
-            background: #aa2222; border: none; padding: 8px 10px; border-radius: 8px;
+            background: var(--perigo); border: none; padding: 7px 10px; border-radius: 8px;
             color: #fff; cursor: pointer; font-weight: bold; font-size: 13px;
         }
         .voltar-btn {
             background: #333; border: none; padding: 12px; border-radius: 10px;
             color: #fff; width: 100%; margin-top: 20px; cursor: pointer; font-weight: bold;
         }
-        .novo-usuario {
-            background: #161b22; padding: 20px; border-radius: 12px; margin-bottom: 20px;
-        }
-        .novo-usuario h3 { margin-bottom: 10px; font-size: 15px; color: #aaa; }
 
-        /* SPLASH */
+        /* SPLASH E CONTEÚDO */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #000 0%, #0d1117 100%);
             display: none; justify-content: center; align-items: center;
-            z-index: 9997; transition: opacity 0.5s ease;
-        }
-        .splash-text { text-align: center; }
-        .splash-text h1 {
-            font-size: 28px;
-            background: linear-gradient(90deg, #33ccff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
+            z-index: 9997;
         }
         .loader {
             border: 4px solid rgba(255,255,255,0.1);
             border-left-color: #00d4ff;
-            border-radius: 50%;
-            width: 40px; height: 40px; margin: 20px auto 0;
+            border-radius: 50%; width: 40px; height: 40px; margin: 20px auto;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-
-        /* CONTEÚDO PRINCIPAL */
         #main-content { display: none; }
-
-        .banner {
-            background: linear-gradient(135deg, #33ccff 0%, #ff00ff 100%);
-            padding: 35px 20px; border-radius: 40px; text-align: center; margin-bottom: 35px;
-        }
-        .banner h1 { font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 20px; }
-        .dates { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .date-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        .date-box {
-            background: rgba(0,0,0,0.25); padding: 8px 18px; border-radius: 20px;
-            font-size: 14px; font-weight: 600;
-        }
-        .label {
-            font-size: 18px; color: #33ccff; font-weight: bold;
-            margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .grid-game { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 10px; }
-        .grid-platform { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .grid-platform .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
-        .btn {
-            padding: 18px 10px; border-radius: 16px; border: none;
-            font-size: 14px; font-weight: bold; cursor: pointer; text-transform: uppercase;
-            background: #1a1f2e; color: #8b949e; transition: all 0.3s ease;
-        }
-        .btn.active {
-            background: linear-gradient(90deg, #33ccff, #ff00ff);
-            color: #fff; box-shadow: 0 0 15px rgba(51,204,255,0.4);
-        }
-        .search {
-            width: 100%; padding: 18px 20px; background: #1a1a1f; border: none;
-            border-radius: 16px; color: #fff; margin: 25px 0; font-size: 16px; outline: none;
-        }
-        .search::placeholder { color: #666; }
-        .card {
-            background: #121217; padding: 25px; border-radius: 20px; margin-bottom: 15px;
-            border-left: 4px solid #33ccff;
-        }
-        .c-name { font-weight: bold; font-size: 20px; margin-bottom: 15px; display: block; }
-        .c-code {
-            background: #000; padding: 20px; border-radius: 12px;
-            color: #33ccff; font-family: monospace; font-size: 16px;
-            line-height: 1.8; display: block;
-        }
         .sair-btn {
             background: #222; border: none; padding: 10px 15px; border-radius: 10px;
             color: #888; cursor: pointer; margin-bottom: 20px; width: 100%;
         }
-        .sair-btn:hover { color: #fff; background: #333; }
+        .banner {
+            background: linear-gradient(135deg, #33ccff 0%, #ff00ff 100%);
+            padding: 30px 20px; border-radius: 30px; text-align: center; margin-bottom: 30px;
+        }
+        .banner h1 { font-size: 28px; color: #fff; margin-bottom: 15px; }
+        .date-box {
+            background: rgba(0,0,0,0.25); padding: 8px 15px; border-radius: 20px;
+            font-size: 14px; display: inline-block; margin: 3px;
+        }
+        .aviso-expira {
+            background: rgba(255,153,0,0.15); border: 1px solid #ff9900;
+            padding: 10px; border-radius: 10px; margin-bottom: 20px;
+            font-size: 13px; color: #ffcc66; text-align: center;
+        }
+        .label {
+            font-size: 17px; color: #33ccff; font-weight: bold;
+            margin: 25px 0 12px; text-transform: uppercase;
+        }
+        .grid-game, .grid-platform { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .grid-platform .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .btn-game {
+            padding: 15px 8px; border-radius: 12px; border: none;
+            font-size: 13px; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            background: #1a1f2e; color: #8b949e;
+        }
+        .btn-game.active {
+            background: linear-gradient(90deg, #33ccff, #ff00ff); color: #fff;
+            box-shadow: 0 0 12px rgba(51,204,255,0.4);
+        }
+        .search {
+            width: 100%; padding: 15px; background: #1a1a1f; border: none;
+            border-radius: 14px; color: #fff; margin: 20px 0; font-size: 16px; outline: none;
+        }
+        .card {
+            background: #121217; padding: 20px; border-radius: 16px; margin-bottom: 12px;
+            border-left: 4px solid #33ccff;
+        }
+        .c-name { font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+        .c-code {
+            background: #000; padding: 15px; border-radius: 10px;
+            color: #33ccff; font-family: monospace; font-size: 15px;
+            line-height: 1.8; display: block;
+        }
     </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN PRINCIPAL -->
+<!-- TELA DE LOGIN - SÓ VOCÊ SABE OS DADOS -->
 <div id="login-screen">
     <h1>🔐 GTA MACETE PREMIUM</h1>
     <div class="login-box">
-        <h2>Acesso ao Sistema</h2>
-        <input type="email" id="email-input" class="login-input" placeholder="Seu e-mail">
-        <input type="password" id="senha-input" class="login-input" placeholder="Sua senha">
-        <button class="login-btn" onclick="fazerLogin()">ENTRAR</button>
-        <div class="erro" id="msg-erro">E-mail não autorizado ou senha incorreta!</div>
-        <span class="admin-link" onclick="mostrarDevLogin()">⚙️ Painel do Desenvolvedor</span>
+        <input type="email" id="login-email" class="login-input" placeholder="Seu e-mail">
+        <input type="password" id="login-senha" class="login-input" placeholder="Sua senha">
+        
+        <button class="btn btn-user" onclick="entrarUsuario()">👤 ENTRAR</button>
+        <button class="btn btn-dev" onclick="entrarDev()">⚙️ PAINEL DO DESENVOLVEDOR</button>
+        
+        <div class="erro" id="msg-erro">E-mail ou senha incorretos!</div>
+        <div class="erro aviso-pendente" id="msg-pendente">⏳ Aguardando liberação do dono...</div>
+        <div class="erro" id="msg-expirou">⚠️ Acesso expirou! Contate o dono.</div>
     </div>
 </div>
 
-<!-- TELA DE LOGIN DO DESENVOLVEDOR (CORRIGIDO) -->
-<div id="dev-login">
-    <div class="dev-box">
-        <h2>🔑 ACESSO DO DESENVOLVEDOR</h2>
-        <input type="email" id="dev-email" class="login-input" placeholder="Seu e-mail de desenvolvedor">
-        <input type="password" id="dev-senha" class="login-input" placeholder="Sua senha de desenvolvedor">
-        <button class="login-btn" onclick="verificarDev()">ENTRAR NO PAINEL</button>
-        <div class="erro" id="dev-erro">Sem permissão! Apenas o desenvolvedor.</div>
-        <button class="voltar-pequeno" onclick="voltarLogin()">← Voltar</button>
-    </div>
-</div>
-
-<!-- PAINEL DE ADMIN -->
+<!-- SEU PAINEL EXCLUSIVO -->
 <div id="admin-panel">
     <div class="admin-box">
-        <h2>⚙️ PAINEL DO DESENVOLVEDOR</h2>
+        <h2>⚙️ SEU PAINEL DE CONTROLE</h2>
         
         <div class="novo-usuario">
-            <h3>Adicionar usuário para liberar acesso</h3>
-            <input type="email" id="novo-email" class="login-input" placeholder="E-mail do usuário">
-            <input type="password" id="nova-senha" class="login-input" placeholder="Criar senha para ele">
-            <button class="login-btn" style="margin-top:5px;" onclick="adicionarUsuario()">LIBERAR ACESSO</button>
+            <h3>➕ CRIAR NOVO ACESSO (30 DIAS)</h3>
+            <input type="email" id="novo-email" class="login-input" placeholder="E-mail da pessoa">
+            <input type="password" id="nova-senha" class="login-input" placeholder="Senha para ela">
+            <button class="btn btn-user" onclick="adicionarUsuario()">✅ CRIAR ACESSO DE 30 DIAS</button>
         </div>
 
-        <h3 style="margin-bottom:10px;">Usuários Cadastrados</h3>
+        <h3 style="margin-bottom:10px;">📋 TODOS OS ACESSOS</h3>
         <div id="lista-usuarios"></div>
 
         <button class="voltar-btn" onclick="sairAdmin()">← Voltar</button>
     </div>
 </div>
 
-<!-- SPLASH -->
+<!-- TELA DE CARREGAMENTO -->
 <div id="splash">
-    <div class="splash-text">
-        <h1>GTA MACETE PREMIUM</h1>
+    <div style="text-align:center;">
+        <h1 style="background:linear-gradient(90deg,#33ccff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GTA MACETE PREMIUM</h1>
         <div class="loader"></div>
     </div>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
+<!-- CONTEÚDO DOS MACETES -->
 <div id="main-content">
     <button class="sair-btn" onclick="sairDoSistema()">🚪 Sair da conta</button>
     
+    <div id="aviso-validade" class="aviso-expira" style="display:none;"></div>
+    
     <div class="banner">
-        <h1>⚡ MACETES<br>COMPLETOS ⚡</h1>
-        <div class="dates">
-            <div class="date-box">📅 LANÇAMENTO: 03/05/2026</div>
-            <div class="date-row">
-                <div class="date-box">🔄 ATUALIZADO: 04/10/2026</div>
-                <div class="date-box">✅ TUDO ESCRITO</div>
-            </div>
+        <h1>⚡ MACETES COMPLETOS ⚡</h1>
+        <div>
+            <span class="date-box">📅 ATUALIZADO: 04/10/2026</span>
+            <span class="date-box">✅ TUDO COMPLETO</span>
         </div>
     </div>
 
@@ -263,399 +221,381 @@
         <div class="grid-platform row-2" id="platform-row2"></div>
     </div>
 
-    <input type="text" class="search" placeholder="Pesquisar macete..." onkeyup="search(this.value)">
-    <div id="list"></div>
+    <input type="text" class="search" placeholder="Pesquisar macete..." onkeyup="filtrar(this.value)">
+    <div id="lista-macetes"></div>
 </div>
 
 <script>
-    // ================= CONFIGURAÇÃO =================
-    // COLOQUE SEUS DADOS AQUI!
-    const DEV_EMAIL = "dev@gta-premium.com";       // SEU E-MAIL
-    const DEV_SENHA = "12345678";                  // SUA SENHA
-    // =================================================
+    // ==================================================
+    // SEUS DADOS SECRETOS - SÓ VOCÊ DEVE SABER!
+    const SEU_EMAIL = "seuemail@dono.com";   // COLOQUE SEU E-MAIL AQUI
+    const SUA_SENHA = "123456";              // COLOQUE SUA SENHA AQUI
+    // ==================================================
 
-    // Inicializar banco de dados
+    // Inicializar sistema
     if (!localStorage.getItem('usuarios')) {
-        const usuariosIniciais = [
-            { email: DEV_EMAIL, senha: DEV_SENHA, autorizado: true, dev: true }
-        ];
-        localStorage.setItem('usuarios', JSON.stringify(usuariosIniciais));
+        localStorage.setItem('usuarios', JSON.stringify([
+            { 
+                email: SEU_EMAIL, 
+                senha: SUA_SENHA, 
+                autorizado: true, 
+                dev: true,
+                dataCriacao: new Date().toISOString(),
+                expiraEm: null // nunca expira
+            }
+        ]));
     }
 
     function getUsuarios() { return JSON.parse(localStorage.getItem('usuarios')); }
-    function salvarUsuarios(lista) { localStorage.setItem('usuarios', JSON.stringify(lista)); }
+    function salvar(lista) { localStorage.setItem('usuarios', JSON.stringify(lista)); }
 
-    // Tela de login principal
-    function fazerLogin() {
-        const email = document.getElementById('email-input').value.trim();
-        const senha = document.getElementById('senha-input').value;
-        const usuarios = getUsuarios();
-        const user = usuarios.find(u => u.email === email && u.senha === senha);
+    // === VERIFICAR VALIDADE DO ACESSO ===
+    function verificarValidade(user) {
+        if (user.dev || !user.expiraEm) return true;
+        return new Date(user.expiraEm) > new Date();
+    }
 
-        if (user && user.autorizado) {
-            localStorage.setItem('usuarioAtual', JSON.stringify(user));
-            entrarSistema();
+    // === ENTRAR NO SEU PAINEL ===
+    function entrarDev() {
+        const email = document.getElementById('login-email').value.trim();
+        const senha = document.getElementById('login-senha').value;
+
+        if (email === SEU_EMAIL && senha === SUA_SENHA) {
+            esconderErros();
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            atualizarLista();
         } else {
             document.getElementById('msg-erro').style.display = 'block';
         }
     }
 
-    // === TELA DE DEV CORRIGIDA ===
-    function mostrarDevLogin() {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('dev-login').style.display = 'flex';
-        document.getElementById('dev-erro').style.display = 'none';
-        document.getElementById('dev-email').value = '';
-        document.getElementById('dev-senha').value = '';
-    }
-
-    function voltarLogin() {
-        document.getElementById('dev-login').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'flex';
-    }
-
-    function verificarDev() {
-        const email = document.getElementById('dev-email').value.trim();
-        const senha = document.getElementById('dev-senha').value;
-        
-        if (email === DEV_EMAIL && senha === DEV_SENHA) {
-            document.getElementById('dev-login').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-            atualizarListaUsuarios();
-        } else {
-            document.getElementById('dev-erro').style.display = 'block';
-        }
-    }
-
     function sairAdmin() {
         document.getElementById('admin-panel').style.display = 'none';
-        voltarLogin();
+        document.getElementById('login-screen').style.display = 'flex';
+        limparCampos();
     }
 
+    // === ENTRAR COMO USUÁRIO ===
+    function entrarUsuario() {
+        const email = document.getElementById('login-email').value.trim();
+        const senha = document.getElementById('login-senha').value;
+        const user = getUsuarios().find(u => u.email === email && u.senha === senha);
+        
+        esconderErros();
+
+        if (!user) {
+            document.getElementById('msg-erro').style.display = 'block';
+            return;
+        }
+
+        if (!user.autorizado) {
+            document.getElementById('msg-pendente').style.display = 'block';
+            return;
+        }
+
+        if (!verificarValidade(user)) {
+            document.getElementById('msg-expirou').style.display = 'block';
+            return;
+        }
+
+        localStorage.setItem('logado', JSON.stringify(user));
+        abrirSistema(user);
+    }
+
+    function esconderErros() {
+        document.getElementById('msg-erro').style.display = 'none';
+        document.getElementById('msg-pendente').style.display = 'none';
+        document.getElementById('msg-expirou').style.display = 'none';
+    }
+
+    function limparCampos() {
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-senha').value = '';
+        esconderErros();
+    }
+
+    // === CRIAR NOVO ACESSO DE 30 DIAS ===
     function adicionarUsuario() {
         const email = document.getElementById('novo-email').value.trim();
         const senha = document.getElementById('nova-senha').value;
         
-        if (!email || !senha) { alert("Preencha tudo!"); return; }
+        if (!email || !senha) { alert('Preencha o e-mail e a senha!'); return; }
+        if (email === SEU_EMAIL) { alert('Esse é o SEU e-mail! Use outro.'); return; }
         
-        let usuarios = getUsuarios();
-        if (usuarios.find(u => u.email === email)) {
-            alert("Esse e-mail já está cadastrado!");
-            return;
-        }
+        let lista = getUsuarios();
+        if (lista.find(u => u.email === email)) { alert('Esse e-mail já está cadastrado!'); return; }
         
-        usuarios.push({ email, senha, autorizado: true, dev: false });
-        salvarUsuarios(usuarios);
-        alert("✅ Acesso liberado para: " + email);
+        // Define expiração para 30 dias
+        const dataExpira = new Date();
+        dataExpira.setDate(dataExpira.getDate() + 30);
+        
+        lista.push({
+            email,
+            senha,
+            autorizado: false, // começa PENDENTE, VOCÊ libera depois
+            dev: false,
+            dataCriacao: new Date().toISOString(),
+            expiraEm: dataExpira.toISOString()
+        });
+        
+        salvar(lista);
+        alert(`✅ CRIADO COM SUCESSO!\n\nE-mail: ${email}\nSenha: ${senha}\nVálido por: 30 dias\n\n⚠️ Ainda precisa LIBERAR abaixo!`);
         document.getElementById('novo-email').value = '';
         document.getElementById('nova-senha').value = '';
-        atualizarListaUsuarios();
+        atualizarLista();
     }
 
-    function atualizarListaUsuarios() {
-        const lista = getUsuarios();
+    // === LIBERAR / BLOQUEAR ===
+    function alternarLiberar(i) {
+        let lista = getUsuarios();
+        lista[i].autorizado = !lista[i].autorizado;
+        salvar(lista);
+        atualizarLista();
+    }
+
+    // === RENOVAR MAIS 30 DIAS ===
+    function renovarAcesso(i) {
+        if (!confirm('Renovar por mais 30 dias?')) return;
+        let lista = getUsuarios();
+        const novaData = new Date();
+        novaData.setDate(novaData.getDate() + 30);
+        lista[i].expiraEm = novaData.toISOString();
+        lista[i].autorizado = true;
+        salvar(lista);
+        atualizarLista();
+        alert('✅ Renovado!');
+    }
+
+    // === REMOVER ACESSO ===
+    function remover(i) {
+        if (!confirm('Tem certeza que deseja excluir?')) return;
+        let lista = getUsuarios();
+        lista.splice(i, 1);
+        salvar(lista);
+        atualizarLista();
+    }
+
+    // === ATUALIZAR LISTA ===
+    function atualizarLista() {
         let html = '';
-        lista.forEach((u, i) => {
+        getUsuarios().forEach((u, i) => {
+            const valido = verificarValidade(u);
+            let classeStatus = '';
+            let textoStatus = '';
+            
+            if (u.dev) {
+                classeStatus = 'status-autorizado';
+                textoStatus = '👑 DONO — SEMPRE VÁLIDO';
+            } else if (!u.autorizado) {
+                classeStatus = 'status-pendente';
+                textoStatus = '⏳ AGUARDANDO LIBERAÇÃO';
+            } else if (!valido) {
+                classeStatus = 'status-expirado';
+                textoStatus = '❌ EXPIRADO';
+            } else {
+                classeStatus = 'status-autorizado';
+                const dias = Math.ceil((new Date(u.expiraEm) - new Date()) / (1000*60*60*24));
+                textoStatus = `✅ VÁLIDO — ${dias} dia(s) restante(s)`;
+            }
+
+            const dataExpiraTexto = u.expiraEm 
+                ? new Date(u.expiraEm).toLocaleDateString('pt-BR') 
+                : 'Nunca expira';
+
             html += `
             <div class="user-item">
-                <div>
+                <div style="flex:1; min-width:180px;">
                     <div class="user-email">${u.email}</div>
-                    <span class="user-status ${u.autorizado ? 'status-autorizado' : 'status-pendente'}">
-                        ${u.autorizado ? '✅ Autorizado' : '⏳ Pendente'}
-                        ${u.dev ? '👑 DESENVOLVEDOR' : ''}
-                    </span>
+                    <span class="user-status ${classeStatus}">${textoStatus}</span>
+                    <div class="data-validade">Validade: ${dataExpiraTexto}</div>
                 </div>
-                <div>
-                    ${!u.dev ? `<button class="btn-libera" onclick="toggleAutorizar(${i})">${u.autorizado ? 'Bloquear' : 'Liberar'}</button>` : ''}
-                    ${!u.dev ? `<button class="btn-remove" onclick="removerUsuario(${i})">✕</button>` : ''}
-                </div>
+                ${!u.dev ? `<div style="display:flex; gap:5px; flex-wrap:wrap;">
+                    <button class="btn-libera" onclick="alternarLiberar(${i})">
+                        ${u.autorizado ? 'Bloquear' : 'Liberar'}
+                    </button>
+                    <button class="btn-bloqueia" onclick="renovarAcesso(${i})">+30 Dias</button>
+                    <button class="btn-remove" onclick="remover(${i})">✕</button>
+                </div>` : ''}
             </div>`;
         });
-        document.getElementById('lista-usuarios').innerHTML = html || '<p style="color:#666;text-align:center;">Nenhum usuário</p>';
+        document.getElementById('lista-usuarios').innerHTML = html || '<p style="color:#666;text-align:center;">Nenhum acesso criado</p>';
     }
 
-    function toggleAutorizar(indice) {
-        let lista = getUsuarios();
-        lista[indice].autorizado = !lista[indice].autorizado;
-        salvarUsuarios(lista);
-        atualizarListaUsuarios();
-    }
-
-    function removerUsuario(indice) {
-        if (!confirm("Tem certeza?")) return;
-        let lista = getUsuarios();
-        lista.splice(indice, 1);
-        salvarUsuarios(lista);
-        atualizarListaUsuarios();
-    }
-
-    // Entrar no sistema
-    function entrarSistema() {
+    // === ABRIR SISTEMA ===
+    function abrirSistema(usuario) {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('splash').style.display = 'flex';
+        
         setTimeout(() => {
-            document.getElementById('splash').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('splash').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                renderGames();
-            }, 500);
+            document.getElementById('splash').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            
+            // Mostra aviso de dias restantes
+            if (!usuario.dev && usuario.expiraEm) {
+                const dias = Math.ceil((new Date(usuario.expiraEm) - new Date()) / (1000*60*60*24));
+                const aviso = document.getElementById('aviso-validade');
+                aviso.style.display = 'block';
+                aviso.textContent = `⏰ Seu acesso expira em ${dias} dia(s) — ${new Date(usuario.expiraEm).toLocaleDateString('pt-BR')}`;
+            }
+            
+            carregarJogos();
         }, 1500);
     }
 
     function sairDoSistema() {
-        localStorage.removeItem('usuarioAtual');
+        localStorage.removeItem('logado');
         document.getElementById('main-content').style.display = 'none';
         document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('email-input').value = '';
-        document.getElementById('senha-input').value = '';
-        document.getElementById('msg-erro').style.display = 'none';
+        limparCampos();
     }
 
-    // Verificar se já está logado
-    window.onload = function() {
-        const logado = localStorage.getItem('usuarioAtual');
-        if (logado) entrarSistema();
+    window.onload = () => {
+        if (localStorage.getItem('logado')) {
+            const user = JSON.parse(localStorage.getItem('logado'));
+            if (verificarValidade(user)) abrirSistema(user);
+            else localStorage.removeItem('logado');
+        }
     };
 
-    // ========== BANCO DE MACETES ==========
+    // === BANCO DE MACETES ===
     const db = {
-        v: {
-            nome: "GTA V",
-            m: ['PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE', 'XBOX 360'],
-            row1: ['PS4 / PS5', 'CELULAR', 'PC'],
-            row2: ['XBOX ONE', 'XBOX 360'],
-            'PS4 / PS5': [
-                {n:"Vida e colete completos", c:"Círculo L1 Triângulo R2 X Quadrado Círculo Direita Quadrado L1 L1 L1"},
-                {n:"Invencibilidade", c:"Direita X Direita Esquerda Direita R1 Direita Esquerda X Triângulo"},
-                {n:"Aumentar nível de procurado", c:"R1 R1 Círculo R2 Esquerda Direita Esquerda Direita Esquerda Direita"},
-                {n:"Diminuir nível de procurado", c:"R1 R1 Círculo R2 Direita Esquerda Direita Esquerda Direita Esquerda"},
-                {n:"Super pulo", c:"L2 L2 Quadrado Círculo Círculo L2 Quadrado Quadrado Esquerda Direita X"},
-                {n:"Corrida rápida", c:"Triângulo Esquerda Direita Direita L2 L1 Quadrado"},
-                {n:"Nado rápido", c:"Esquerda Esquerda L1 Direita Direita R2 Esquerda L2 Direita"},
-                {n:"Mira em câmera lenta", c:"Quadrado L2 R1 Triângulo Esquerda Quadrado L2 Direita X"},
-                {n:"Câmera lenta", c:"Triângulo Esquerda Direita Direita Quadrado R2 R1"},
-                {n:"Gravidade lunar", c:"Esquerda Esquerda L1 R1 L1 Direita Esquerda L1 Esquerda"},
-                {n:"Modo bêbado", c:"Triângulo Direita Direita Esquerda Direita Quadrado Círculo Esquerda"},
-                {n:"Armas", c:"Triângulo R2 Esquerda L1 X Direita Triângulo Baixo Quadrado L1 L1 L1"},
-                {n:"Recarregar Habilidade", c:"X X Quadrado R1 L1 X Direita Esquerda X"},
-                {n:"Paraquedas", c:"Esquerda Direita L1 L2 R1 R2 R2 Esquerda Esquerda Direita L1"},
-                {n:"Cair do céu", c:"L1 L2 R1 R2 Esquerda Direita Esquerda Direita L1 L2 R1 R2 Esquerda Direita Esquerda Direita"},
-                {n:"Ataques corpo a corpo explosivos", c:"Direita Esquerda X Triângulo R1 Círculo Círculo Círculo L2"},
-                {n:"Munição Explosiva", c:"Direita Quadrado X Esquerda R1 R2 Esquerda Direita Direita L1 L1 L1"},
-                {n:"Munição Inflamável", c:"L1 R1 Quadrado R1 Esquerda R2 R1 Esquerda Quadrado Direita L1 L1"},
-                {n:"Mudar o Clima", c:"R2 X L1 L1 L2 L2 L2 Quadrado"},
-                {n:"Modo drift", c:"Triângulo R1 R1 Esquerda R1 L1 R2 L1"},
-                {n:"Bicicleta BMX", c:"Esquerda Esquerda Direita Direita Esquerda Direita Quadrado Círculo Triângulo R1 R2"},
-                {n:"Helicóptero Buzzard", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 R1 Triângulo Círculo Triângulo"},
-                {n:"Carro Comet", c:"R1 Círculo R2 Direita L1 L2 X X Quadrado R1"},
-                {n:"Moto Sanchez", c:"Círculo X L1 Círculo Círculo L1 Círculo R1 R2 L2 L1 L1"},
-                {n:"Moto PCJ‑600", c:"R1 Direita Esquerda Direita R2 Esquerda Direita Quadrado Direita L2 L1 L1"},
-                {n:"Carrinho de Golfe", c:"Círculo L1 Esquerda R1 L2 X R1 L1 Círculo X"},
-                {n:"Caminhão de Lixo Trashmaster", c:"Círculo R1 Círculo R1 Esquerda Esquerda R1 L1 Círculo Direita"},
-                {n:"Carro Rapid GT", c:"R2 L1 Círculo Direita L1 R1 Direita Esquerda Círculo R2"},
-                {n:"Limousine", c:"R2 Direita L2 Esquerda Esquerda R1 L1 Círculo Direita"},
-                {n:"Avião de Acrobacias", c:"Círculo Direita L1 L2 Esquerda R1 L1 L1 Esquerda Esquerda X Triângulo"},
-                {n:"Avião Duster", c:"Direita Esquerda R1 R1 R1 Esquerda Triângulo Triângulo X Círculo L1 L1"}
-            ],
-            'CELULAR': [
-                {n:"Invencibilidade", c:"1-999-724-654-5537"},
-                {n:"Vida e colete completos", c:"1-999-547-893-2463"},
-                {n:"Armas e munição infinita", c:"1-999-289-723-462"},
-                {n:"Corrida rápida", c:"1-999-228-2463"},
-                {n:"Super pulo", c:"1-999-467-8648"},
-                {n:"Mudar o clima", c:"1-999-625-5487"},
-                {n:"Gravidade lunar", c:"1-999-356-2837"},
-                {n:"Munição explosiva", c:"1-999-256-3786"},
-                {n:"Munição incendiária", c:"1-999-462-348-7632"},
-                {n:"Câmera lenta", c:"1-999-756-2666"},
-                {n:"Mira em câmera lenta", c:"1-999-398-4487"},
-                {n:"Nível de procurado +1", c:"1-999-384-4833"},
-                {n:"Remover procurado", c:"1-999-529-5377"},
-                {n:"Nado rápido", c:"1-999-737-5925"},
-                {n:"Habilidade recarregada", c:"1-999-769-3247"},
-                {n:"Modo drift", c:"1-999-398-7253"},
-                {n:"Modo bêbado", c:"1-999-548-2347"},
-                {n:"Paraquedas", c:"1-999-759-3255"},
-                {n:"Cair do céu", c:"1-999-758-2436"},
-                {n:"Ataques explosivos", c:"1-999-484-4958"},
-                {n:"Spawn Buzzard", c:"1-999-289-9633"},
-                {n:"Spawn Comet", c:"1-999-266-3878"},
-                {n:"Spawn PCJ‑600", c:"1-999-226-3489"},
-                {n:"Spawn Sanchez", c:"1-999-633-2462"},
-                {n:"Spawn BMX", c:"1-999-245-7893"},
-                {n:"Spawn Rapid GT", c:"1-999-727-4348"},
-                {n:"Spawn Limousine", c:"1-999-845-2436"},
-                {n:"Spawn Duster", c:"1-999-359-8247"},
-                {n:"Spawn Jetmax", c:"1-999-587-2349"},
-                {n:"Spawn Cargobob", c:"1-999-228-5678"},
-                {n:"Spawn Turismo R", c:"1-999-444-8278"}
-            ],
-            'PC': [
-                {n:"Invencibilidade", c:"PAINFULLYSTRONGER"},
-                {n:"Armas e Munição", c:"TOOLUP"},
-                {n:"Corrida rápida", c:"CATCHME"},
-                {n:"Super pulo", c:"HOPTOIT"},
-                {n:"Gravidade lunar", c:"FLOATER"},
-                {n:"Munição Explosiva", c:"HIGHEX"},
-                {n:"Câmera lenta", c:"SLOWMO"},
-                {n:"Mudar o Clima", c:"MAKEITRAIN"},
-                {n:"Spawn Buzzard", c:"BUZZOFF"},
-                {n:"Spawn Comet", c:"COMET"},
-                {n:"Spawn PCJ‑600", c:"ROCKET"},
-                {n:"Spawn Sanchez", c:"OFFROAD"}
-            ],
-            'XBOX ONE': [
-                {n:"Vida e colete completos", c:"B LB Y RT X A B Direita A LB LB LB"},
-                {n:"Invencibilidade", c:"Direita Y Direita Esquerda Direita RB Direita Esquerda Y X"},
-                {n:"Aumentar nível de procurado", c:"RB RB B RT Esquerda Direita Esquerda Direita Esquerda Direita"},
-                {n:"Diminuir nível de procurado", c:"RB RB B RT Direita Esquerda Direita Esquerda Direita Esquerda"},
-                {n:"Super pulo", c:"LT LT X B B LT X X Esquerda Direita Y"},
-                {n:"Corrida rápida", c:"Y Esquerda Direita Direita LT LB X"},
-                {n:"Nado rápido", c:"Esquerda Esquerda LB Direita Direita RT Esquerda LT Direita"},
-                {n:"Mira em câmera lenta", c:"X LT RB Y Esquerda X LT Direita Y"},
-                {n:"Câmera lenta", c:"Y Esquerda Direita Direita X RT RB"},
-                {n:"Gravidade lunar", c:"Esquerda Esquerda LB RB LB Direita Esquerda LB Esquerda"},
-                {n:"Modo bêbado", c:"Y Direita Direita Esquerda Direita X B Esquerda"},
-                {n:"Armas", c:"Y RT Esquerda LB A Direita Y Baixo X LB LB LB"},
-                {n:"Recarregar Habilidade", c:"A A X RB LB A Direita Esquerda A"},
-                {n:"Paraquedas", c:"Esquerda Direita LB LT RB RT RT Esquerda Esquerda Direita LB"},
-                {n:"Cair do céu", c:"LB LT RB RT Esquerda Direita Esquerda Direita LB LT RB RT Esquerda Direita Esquerda Direita"},
-                {n:"Ataques corpo a corpo explosivos", c:"Direita Esquerda A Y RB B B B LT"},
-                {n:"Munição Explosiva", c:"Direita X A Esquerda RB RT Esquerda Direita Direita LB LB LB"},
-                {n:"Munição Inflamável", c:"LB RB X RB Esquerda RT RB Esquerda X Direita LB LB"},
-                {n:"Mudar o Clima", c:"RT A LB LB LT LT LT X"},
-                {n:"Modo drift", c:"Y RB RB Esquerda RB LB RT LB"},
-                {n:"Bicicleta BMX", c:"Esquerda Esquerda Direita Direita Esquerda Direita X B Y RB RT"},
-                {n:"Helicóptero Buzzard", c:"B B LB B B B LB LT RB Y B Y"},
-                {n:"Carro Comet", c:"RB B RT Direita LB LT A A X RB"},
-                {n:"Moto Sanchez", c:"B A LB B B LB B RB RT LT LB LB"},
-                {n:"Moto PCJ‑600", c:"RB Direita Esquerda Direita RT Esquerda Direita X Direita LT LB LB"},
-                {n:"Carrinho de Golfe", c:"B LB Esquerda RB LT A RB LB B A"},
-                {n:"Caminhão de Lixo Trashmaster", c:"B RB B RB Esquerda Esquerda RB LB B Direita"},
-                {n:"Carro Rapid GT", c:"RT LB B Direita LB RB Direita Esquerda B RT"},
-                {n:"Limousine", c:"RT Direita LT Esquerda Esquerda RB LB B Direita"},
-                {n:"Avião de Acrobacias", c:"B Direita LB LT Esquerda RB LB LB Esquerda Esquerda A Y"},
-                {n:"Avião Duster", c:"Direita Esquerda RB RB RB Esquerda Y Y A B LB LB"}
-            ],
-            'XBOX 360': [
-                {n:"Vida e colete completos", c:"B LB Y RT X A B Direita A LB LB LB"},
-                {n:"Invencibilidade", c:"Direita Y Direita Esquerda Direita RB Direita Esquerda Y X"},
-                {n:"Aumentar nível de procurado", c:"RB RB B RT Esquerda Direita Esquerda Direita Esquerda Direita"},
-                {n:"Diminuir nível de procurado", c:"RB RB B RT Direita Esquerda Direita Esquerda Direita Esquerda"},
-                {n:"Super pulo", c:"LT LT X B B LT X X Esquerda Direita Y"},
-                {n:"Corrida rápida", c:"Y Esquerda Direita Direita LT LB X"},
-                {n:"Nado rápido", c:"Esquerda Esquerda LB Direita Direita RT Esquerda LT Direita"},
-                {n:"Mira em câmera lenta", c:"X LT RB Y Esquerda X LT Direita Y"},
-                {n:"Câmera lenta", c:"Y Esquerda Direita Direita X RT RB"},
-                {n:"Gravidade lunar", c:"Esquerda Esquerda LB RB LB Direita Esquerda LB Esquerda"},
-                {n:"Modo bêbado", c:"Y Direita Direita Esquerda Direita X B Esquerda"},
-                {n:"Armas", c:"Y RT Esquerda LB A Direita Y Baixo X LB LB LB"},
-                {n:"Recarregar Habilidade", c:"A A X RB LB A Direita Esquerda A"},
-                {n:"Paraquedas", c:"Esquerda Direita LB LT RB RT RT Esquerda Esquerda Direita LB"},
-                {n:"Cair do céu", c:"LB LT RB RT Esquerda Direita Esquerda Direita LB LT RB RT Esquerda Direita Esquerda Direita"},
-                {n:"Ataques corpo a corpo explosivos", c:"Direita Esquerda A Y RB B B B LT"},
-                {n:"Munição Explosiva", c:"Direita X A Esquerda RB RT Esquerda Direita Direita LB LB LB"},
-                {n:"Munição Inflamável", c:"LB RB X RB Esquerda RT RB Esquerda X Direita LB LB"},
-                {n:"Mudar o Clima", c:"RT A LB LB LT LT LT X"},
-                {n:"Modo drift", c:"Y RB RB Esquerda RB LB RT LB"},
-                {n:"Bicicleta BMX", c:"Esquerda Esquerda Direita Direita Esquerda Direita X B Y RB RT"},
-                {n:"Helicóptero Buzzard", c:"B B LB B B B LB LT RB Y B Y"},
-                {n:"Carro Comet", c:"RB B RT Direita LB LT A A X RB"},
-                {n:"Moto Sanchez", c:"B A LB B B LB B RB RT LT LB LB"},
-                {n:"Moto PCJ‑600", c:"RB Direita Esquerda Direita RT Esquerda Direita X Direita LT LB LB"},
-                {n:"Carrinho de Golfe", c:"B LB Esquerda RB LT A RB LB B A"},
-                {n:"Caminhão de Lixo Trashmaster", c:"B RB B RB Esquerda Esquerda RB LB B Direita"},
-                {n:"Carro Rapid GT", c:"RT LB B Direita LB RB Direita Esquerda B RT"},
-                {n:"Limousine", c:"RT Direita LT Esquerda Esquerda RB LB B Direita"},
-                {n:"Avião de Acrobacias", c:"B Direita LB LT Esquerda RB LB LB Esquerda Esquerda A Y"},
-                {n:"Avião Duster", c:"Direita Esquerda RB RB RB Esquerda Y Y A B LB LB"}
-            ]
+        v: {nome:"GTA V", plataformas:['PS4 / PS5','CELULAR','PC','XBOX ONE','XBOX 360'],
+            dados:{
+                'XBOX 360': [
+                    {n:"Vida e colete completos", c:"B LB Y RT X A B Direita A LB LB LB"},
+                    {n:"Invencibilidade", c:"Direita Y Direita Esquerda Direita RB Direita Esquerda Y X"},
+                    {n:"Armas", c:"Y RT Esquerda LB A Direita Y Baixo X LB LB LB"},
+                    {n:"Super pulo", c:"LT LT X B B LT X X Esquerda Direita Y"},
+                    {n:"Corrida rápida", c:"Y Esquerda Direita Direita LT LB X"},
+                    {n:"Nado rápido", c:"Esquerda Esquerda LB Direita Direita RT Esquerda LT Direita"},
+                    {n:"Mudar clima", c:"RT A LB LB LT LT LT X"},
+                    {n:"Spawn Helicóptero Buzzard", c:"B B LB B B B LB LT RB Y B Y"},
+                    {n:"Spawn Carro Comet", c:"RB B RT Direita LB LT A A X RB"},
+                    {n:"Spawn Moto Sanchez", c:"B A LB B B LB B RB RT LT LB LB"},
+                    {n:"Spawn Moto PCJ-600", c:"RB Direita Esquerda Direita RT Esquerda Direita X Direita LT LB LB"},
+                    {n:"Spawn Avião Duster", c:"Direita Esquerda RB RB RB Esquerda Y Y A B LB LB"},
+                    {n:"Diminuir procurado", c:"RB RB B RT Direita Esquerda Direita Esquerda Direita Esquerda"},
+                    {n:"Aumentar procurado", c:"RB RB B RT Esquerda Direita Esquerda Direita Esquerda Direita"},
+                    {n:"Munição explosiva", c:"Direita X A Esquerda RB RT Esquerda Direita Direita LB LB LB"},
+                    {n:"Paraquedas", c:"Esquerda Direita LB LT RB RT RT Esquerda Esquerda Direita LB"},
+                    {n:"Cair do céu", c:"LB LT RB RT Esquerda Direita Esquerda Direita LB LT RB RT Esquerda Direita Esquerda Direita"}
+                ],
+                'XBOX ONE': [
+                    {n:"Vida e colete completos", c:"B LB Y RT X A B Direita A LB LB LB"},
+                    {n:"Invencibilidade", c:"Direita Y Direita Esquerda Direita RB Direita Esquerda Y X"},
+                    {n:"Armas", c:"Y RT Esquerda LB A Direita Y Baixo X LB LB LB"},
+                    {n:"Super pulo", c:"LT LT X B B LT X X Esquerda Direita Y"},
+                    {n:"Corrida rápida", c:"Y Esquerda Direita Direita LT LB X"},
+                    {n:"Nado rápido", c:"Esquerda Esquerda LB Direita Direita RT Esquerda LT Direita"},
+                    {n:"Mudar clima", c:"RT A LB LB LT LT LT X"},
+                    {n:"Spawn Helicóptero Buzzard", c:"B B LB B B B LB LT RB Y B Y"},
+                    {n:"Spawn Carro Comet", c:"RB B RT Direita LB LT A A X RB"},
+                    {n:"Spawn Moto Sanchez", c:"B A LB B B LB B RB RT LT LB LB"}
+                ],
+                'PS4 / PS5': [
+                    {n:"Vida e colete completos", c:"Círculo L1 Triângulo R2 X Quadrado Círculo Direita Quadrado L1 L1 L1"},
+                    {n:"Invencibilidade", c:"Direita X Direita Esquerda Direita R1 Direita Esquerda X Triângulo"},
+                    {n:"Armas", c:"Triângulo R2 Esquerda L1 X Direita Triângulo Baixo Quadrado L1 L1 L1"},
+                    {n:"Super pulo", c:"L2 L2 Quadrado Círculo Círculo L2 Quadrado Quadrado Esquerda Direita X"},
+                    {n:"Corrida rápida", c:"Triângulo Esquerda Direita Direita L2 L1 Quadrado"},
+                    {n:"Nado rápido", c:"Esquerda Esquerda L1 Direita Direita R2 Esquerda L2 Direita"},
+                    {n:"Mudar clima", c:"R2 X L1 L1 L2 L2 L2 Quadrado"},
+                    {n:"Spawn Helicóptero Buzzard", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 R1 Triângulo Círculo Triângulo"}
+                ],
+                'CELULAR': [
+                    {n:"Invencibilidade", c:"1-999-724-654-5537"},
+                    {n:"Vida e colete completos", c:"1-999-547-893-2463"},
+                    {n:"Armas e munição", c:"1-999-289-723-462"},
+                    {n:"Corrida rápida", c:"1-999-228-2463"},
+                    {n:"Super pulo", c:"1-999-467-8648"},
+                    {n:"Mudar clima", c:"1-999-625-5487"},
+                    {n:"Nado rápido", c:"1-999-737-5925"},
+                    {n:"Remover procurado", c:"1-999-529-5377"},
+                    {n:"Spawn Buzzard", c:"1-999-289-9633"},
+                    {n:"Spawn Comet", c:"1-999-266-3878"},
+                    {n:"Spawn PCJ-600", c:"1-999-226-3489"},
+                    {n:"Spawn Sanchez", c:"1-999-633-2462"}
+                ],
+                'PC': [
+                    {n:"Invencibilidade", c:"PAINFULLYSTRONGER"},
+                    {n:"Armas e munição", c:"TOOLUP"},
+                    {n:"Corrida rápida", c:"CATCHME"},
+                    {n:"Super pulo", c:"HOPTOIT"},
+                    {n:"Mudar clima", c:"MAKEITRAIN"},
+                    {n:"Spawn Buzzard", c:"BUZZOFF"},
+                    {n:"Spawn Comet", c:"COMET"},
+                    {n:"Spawn PCJ-600", c:"ROCKET"},
+                    {n:"Spawn Sanchez", c:"OFFROAD"}
+                ]
+            }
         },
-        sa: {
-            nome: "GTA San Andreas",
-            m: ['PS2', 'XBOX', 'PS4 / PS5', 'CELULAR', 'PC', 'XBOX ONE'],
-            row1: ['PS2', 'XBOX', 'PS4 / PS5'],
-            row2: ['CELULAR', 'PC', 'XBOX ONE'],
-            'PS2': [
-                {n:"Vida, Colete e $250k", c:"X Triângulo Quadrado Baixo Triângulo Triângulo Direita Círculo"},
-                {n:"Armas Profissionais", c:"Triângulo Quadrado X Esquerda L1 R1 Círculo Baixo"},
-                {n:"Munição Infinita", c:"L1 R1 Quadrado Triângulo Baixo Círculo Direita Triângulo"},
-                {n:"Procurado Máximo", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
-                {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
-                {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
-                {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
-                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
-                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
-                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
-                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Carros Voadores", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
-                {n:"Trânsito Agressivo", c:"R2 X Triângulo L1 L1 Triângulo R2"},
-                {n:"Respeito Máximo", c:"L1 R1 Esquerda Círculo Esquerda R1 L1 Quadrado R2 R2"},
-                {n:"Sex Appeal Máximo", c:"Círculo Esquerda Círculo Esquerda Esquerda Quadrado Círculo Esquerda"},
-                {n:"Stamina Máxima", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Explosões", c:"R2 L2 R1 R1 L2 L2 Quadrado Esquerda"}
-            ],
-            'XBOX ONE': [
-                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
-                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
-                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
-                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
-                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
-                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
-                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
-                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
-                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
-                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
-                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
-                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
-                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
-                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
-                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
-                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
-            ],
-            'XBOX 360': [
-                {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
-                {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
-                {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
-                {n:"Procurado Máximo", c:"Y Y X Esquerda Y B A Y"},
-                {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
-                {n:"Spawn Rhino (Tanque)", c:"B B LB B B B LB LT X B Esquerda"},
-                {n:"Spawn Hunter", c:"B X Y B B Esquerda X B"},
-                {n:"Spawn Hydra", c:"Y X Esquerda Y Y Y X B"},
-                {n:"Spawn Jetpack", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Spawn Quad", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"RB B RT Esquerda LB LB Y RB RT"},
-                {n:"Paraquedas", c:"LB LT RB RT Y Baixo B Esquerda"},
-                {n:"Gravidade Baixa", c:"Y Baixo Y Y X Esquerda Y X"},
-                {n:"Câmera Lenta", c:"Y Y X Esquerda Y Y Esquerda X"},
-                {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"},
-                {n:"Trânsito Agressivo", c:"RT X Y LB LB Y RT"},
-                {n:"Respeito Máximo", c:"LB RB Y B Esquerda RB LB Y RT RT"},
-                {n:"Sex Appeal Máximo", c:"B Y B Esquerda Esquerda X B Esquerda"},
-                {n:"Stamina Máxima", c:"Y B X Esquerda Y Y Esquerda X"},
-                {n:"Explosões", c:"RT LT RB RB LT LT Y Esquerda"}
-            ],
-            'PS4 / PS5': [
-                {n:"Vida, Colete e $250k", c:"X Triângulo Quadrado Baixo Triângulo Triângulo Direita Círculo"},
-                {n:"Armas Profissionais", c:"Triângulo Quadrado X Esquerda L1 R1 Círculo Baixo"},
-                {n:"Munição Infinita", c:"L1 R1 Quadrado Triângulo Baixo Círculo Direita Triângulo"},
-                {n:"Procurado Máximo", c:"Triângulo Triângulo Quadrado Esquerda Triângulo Círculo X Triângulo"},
-                {n:"Tirar Procurado", c:"R1 R1 Círculo R2 Triângulo Quadrado Baixo X"},
-                {n:"Spawn Rhino (Tanque)", c:"Círculo Círculo L1 Círculo Círculo Círculo L1 L2 Quadrado Círculo Esquerda"},
-                {n:"Spawn Hunter", c:"Círculo X Triângulo Círculo Círculo Esquerda X Círculo"},
-                {n:"Spawn Hydra", c:"Triângulo X Esquerda Triângulo Triângulo Triângulo X Círculo"},
-                {n:"Spawn Jetpack", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Spawn Quad", c:"Triângulo Círculo X Esquerda Triângulo Triângulo Esquerda X"},
-                {n:"Spawn Hotring Racer", c:"R1 Círculo R2 Esquerda L1 L1 Quadrado R1 R2"},
-                {n:"Paraquedas", c:"L1 L2 R1 R2 Triângulo Baixo Círculo Esquerda"},
-                {n:"Gravidade Baixa", c:"Triângulo Baixo Triângulo Triângulo X Esquerda Triângulo X"},
-                {n:"Câmera Lenta", c:"Triângulo Triângulo X Esquerda Triângulo Tri
+        sa: {nome:"GTA San Andreas", plataformas:['PS2','XBOX 360','PS4 / PS5','CELULAR','PC','XBOX ONE'],
+            dados:{
+                'XBOX 360': [
+                    {n:"Vida, Colete e $250k", c:"A Y X B A A Direita X B"},
+                    {n:"Armas Profissionais", c:"Y X A Esquerda LB RB B Baixo"},
+                    {n:"Munição Infinita", c:"LB RB X Y Baixo B Direita Y"},
+                    {n:"Tirar Procurado", c:"RB RB B RT Y X Baixo A"},
+                    {n:"Spawn Tanque Rhino", c:"B B LB B B B LB LT X B Esquerda"},
+                    {n:"Spawn Helicóptero Hunter", c:"B X Y B B Esquerda X B"},
+                    {n:"Spawn Jato Hydra", c:"Y X Esquerda Y Y Y X B"},
+                    {n:"Spawn Mochila a Jato", c:"LB LT RB RT Y Baixo B Esquerda"},
+                    {n:"Super Pulo", c:"Y Y X Esquerda Y Y Esquerda X"},
+                    {n:"Carros Voadores", c:"Y Y X Esquerda Y B X Y"}
+                ]
+            }
+        }
+    };
+
+    let jogoAtivo = 'v';
+    let platAtiva = 'XBOX 360';
+
+    function carregarJogos() {
+        const jogos = Object.keys(db);
+        document.getElementById('games').innerHTML = jogos.map(j=>
+            `<button class="btn-game ${j===jogoAtivo?'active':''}" onclick="escolherJogo('${j}')">${db[j].nome}</button>`
+        ).join('');
+        carregarPlataformas();
+    }
+
+    function escolherJogo(j) {
+        jogoAtivo = j;
+        carregarJogos();
+        platAtiva = db[j].plataformas[0];
+        carregarPlataformas();
+    }
+
+    function carregarPlataformas() {
+        const plats = db[jogoAtivo].plataformas;
+        const r1 = plats.slice(0,3);
+        const r2 = plats.slice(3);
+        document.getElementById('platform-row1').innerHTML = r1.map(p=>
+            `<button class="btn-game ${p===platAtiva?'active':''}" onclick="escolherPlat('${p}')">${p}</button>`
+        ).join('');
+        document.getElementById('platform-row2').innerHTML = r2.length?r2.map(p=>
+            `<button class="btn-game ${p===platAtiva?'active':''}" onclick="escolherPlat('${p}')">${p}</button>`
+        ).join(''):'';
+        mostrarMacetes();
+    }
+
+    function escolherPlat(p) {
+        platAtiva = p;
+        carregarPlataformas();
+    }
+
+    function mostrarMacetes(filtro='') {
+        let lista = db[jogoAtivo].dados[platAtiva] || [];
+        if(filtro) lista = lista.filter(m=>m.n.toLowerCase().includes(filtro.toLowerCase()));
+        document.getElementById('lista-macetes').innerHTML = lista.map(m=>`
+            <div class="card">
+                <span class="c-name">${m.n}</span>
+                <code class="c-code">${m.c}</code>
+            </div>
+        `).join('') || '<p style="color:#666;text-align:center;">Nenhum macete encontrado</p>';
+    }
+
+    function filtrar(t) { mostrarMacetes(t); }
+</script>
+</body>
+</html>
